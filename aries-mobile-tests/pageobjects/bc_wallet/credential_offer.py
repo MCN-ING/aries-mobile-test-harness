@@ -37,10 +37,13 @@ class CredentialOfferPage(BasePage):
             # if the credential has a lot of attributes it could need to scroll
             if scroll == True:
                 try:
-                    self.find_by(self.accept_locator).click()
-                except:
                     self.scroll_to_element(self.decline_aid_locator[1])
-                    self.find_by(self.accept_locator).click()
+                except:
+                    # Sometimes it seems that scrolling may try to access the element by accessibility id before it appears
+                    # if we get this failure then just sleep and try again. 
+                    sleep(5)
+                    self.scroll_to_element(self.decline_aid_locator[1])
+                self.find_by(self.accept_locator).click()
             else:
                 self.find_by(self.accept_locator).click()
             return CredentialOnTheWayPage(self.driver)

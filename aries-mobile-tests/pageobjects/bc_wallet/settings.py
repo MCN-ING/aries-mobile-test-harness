@@ -62,9 +62,12 @@ class SettingsPage(BasePage):
     def select_back(self):
         # Don't check if on this page becasue android (unless you scroll back to the top) can't see the App Settings accessibility ID
         # if self.on_this_page():
-        self.find_by(self.back_locator).click()
-        from pageobjects.bc_wallet.home import HomePage
-        return HomePage(self.driver)
+        try:
+            self.find_by(self.back_locator).click()
+            from pageobjects.bc_wallet.home import HomePage
+            return HomePage(self.driver)
+        except:
+            raise Exception("Something went wrong")
         # else:
         #     raise Exception(f"App not on the {type(self)} page")
 

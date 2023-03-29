@@ -8,6 +8,6 @@
     "avd": "Pixel_4_API_31",
     "automationName": "UiAutomator2",
     "autoGrantPermissions": true,
-    "fullReset": true
+    "fullReset": false
   }
 }

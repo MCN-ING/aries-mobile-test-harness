@@ -83,8 +83,11 @@ def step_impl(context, env):
     context.thisSettingsPage.enable_developer_mode()
     context.thisDeveloperSettingsPage = context.thisSettingsPage.select_developer()
     context.thisDeveloperSettingsPage.select_env(env)
+    print(f"onDevSettingsPage: {context.thisDeveloperSettingsPage.on_this_page()}")
     context.thisSettingsPage = context.thisDeveloperSettingsPage.select_back()
-    context.thisSettingsPage.select_back()
+    print(f"onSettingPage: {context.thisSettingsPage.on_this_page()}")
+    context.thisHomePage = context.thisSettingsPage.select_back()
+    print(f"onHomePage: {context.thisHomePage.on_this_page()}")
     assert context.thisHomePage.on_this_page()
 
 
