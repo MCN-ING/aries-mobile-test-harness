@@ -9,14 +9,16 @@ class MoreOptionsPageQC(BasePage):
     """more options page object"""
 
     #Locators
-    on_this_page_text_locator = "More Options"
+    en_title_text_locator = "More Options"
+    fr_title_text_locator = "Plus d'options"
     application_settings_locator = (AppiumBy.ID, "com.ariesbifold:id/AppParams")
     contacts_locator = (AppiumBy.ID, "com.ariesbifold:id/AppContacts")
     help_locator = (AppiumBy.ID, "com.ariesbifold:id/HelpCenter")
     about_locator = (AppiumBy.ID, "com.ariesbifold:id/About")
 
     def on_this_page(self):
-        return super().on_this_page(self.on_this_page_text_locator)
+        return super().on_this_page(self.en_title_text_locator) or super().on_this_page(self.fr_title_text_locator)
+
 
     def select_applicationSettings(self):
         if self.on_this_page():

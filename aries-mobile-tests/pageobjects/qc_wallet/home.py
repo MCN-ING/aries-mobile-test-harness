@@ -11,8 +11,6 @@ from pageobjects.qc_wallet.settings import SettingsPageQC
 from pageobjects.qc_wallet.welcome_to_qc_wallet import WelcomeToQCWalletModal
 from pageobjects.qc_wallet.moreoptions import MoreOptionsPageQC
 
-
-
 class HomePageQC(HomePage):
     """Home page object"""
 
