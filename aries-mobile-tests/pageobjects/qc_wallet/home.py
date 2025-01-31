@@ -11,8 +11,6 @@ from pageobjects.qc_wallet.settings import SettingsPageQC
 from pageobjects.qc_wallet.welcome_to_qc_wallet import WelcomeToQCWalletModal
 from pageobjects.qc_wallet.moreoptions import MoreOptionsPageQC
 
-
-
 class HomePageQC(HomePage):
     """Home page object"""
 
@@ -20,7 +18,7 @@ class HomePageQC(HomePage):
     on_this_page_text_locator = "Home"
     on_this_page_locator = (AppiumBy.NAME, "Home")
     settings_locator = (AppiumBy.ID, "com.ariesbifold:id/Settings")
-    moreOptions_locator = (AppiumBy.ID, "com.ariesbifold:id/More")
+    moreOptions_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.OptionsPlus")
 
 
     # Modals and Alerts for Home page

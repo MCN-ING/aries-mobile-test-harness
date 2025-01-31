@@ -11,6 +11,6 @@ class WelcomeToQCWalletModal(WelcomeToBCWalletModal):
     def on_this_page(self):
         language = self.get_app_language()
         if language == "French":
-            self.on_this_page_text_locator = "Bienvenue à Aries Bifold"
-            self.on_this_page_locator = (AppiumBy.NAME, "Bienvenue à Aries Bifold")
+            self.on_this_page_text_locator = "Bienvenue au Portefeuille numérique"
+            self.on_this_page_locator = (AppiumBy.NAME, "Bienvenue au Portefeuille numérique")
         return super().on_this_page()
