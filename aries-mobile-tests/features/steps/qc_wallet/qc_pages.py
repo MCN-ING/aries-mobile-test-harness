@@ -66,7 +66,7 @@ def what_is_biometrics_step_impl(context):
 def biometrics_step_impl(context):
     assert context.thisWhatIsBiometricsPageQC.on_this_page()
     
-@when("the Holder click on activities")
+@when("the Holder click on activities in the help module")
 def activities_step_impl(context):
     context.thisWhatIsAHistoryPageQC= context.thisHelpPageQC.select_activities()
     
@@ -141,3 +141,21 @@ def return_step_impl(context):
     if hasattr(context, "thisScanAQRcodeInfoPageQC"):  
         context.thisScanAQRcodeInfoPageQC.select_return()
         return
+
+@when("the Holder click on Activities")
+def activities_home_step_impl(context):
+    context.thisNotificationsPageQC= context.thisHomePageQC.select_activities()
+
+@then("notifications page is displayed")
+def activities_display_step_impl(context):
+    assert context.thisNotificationsPageQC.on_this_page()
+    
+@when("the Holder click on History")
+def history_step_impl(context):
+    context.thisHistoryPageQC= context.thisNotificationsPageQC.select_history()
+
+
+
+@then("History page is displayed")
+def history_display_step_impl(context):
+    assert context.thisHistoryPageQC.on_this_page()

@@ -27,7 +27,7 @@ Then Help Center page is displayed
 @T004-helpCenter @AcceptanceTest
 Scenario: User open what is a history info page in the help center module
 Given the Holder is on the help center page
-When the Holder click on activities
+When the Holder click on activities in the help module
 Then what is a history info page is displayed
 When the Holder click on return to Help Center button
 Then Help Center page is displayed 

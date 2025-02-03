@@ -125,14 +125,14 @@ def select_ok_on_error_step_impl(context):
 
 @overrides("they are informed that the PINs do not match", "then")
 def step_impl(context):
-    assert context.thisPINSetupPage.get_error() == "PINs do not match"
+    assert context.thisPINSetupPageQC.get_error() == "PINs do not match"
 
 
 @overrides("they have access to the app with the new PIN", "then")
 def step_access_app_with_pin(context):
-    assert context.thisSettingsPage.on_this_page()
-    context.thisHomePage = context.thisSettingsPage.select_back()
-    assert context.thisHomePage.on_this_page()
+    assert context.thisSettingsPageQC.on_this_page()
+    context.thisHomePageQC = context.thisSettingsPageQC.select_back()
+    assert context.thisHomePageQC.on_this_page()
 
     context.execute_steps(
         """
@@ -160,9 +160,9 @@ def step_access_app_with_pin(context):
 @overrides("the User has successfully updated PIN", "when")
 @overrides("the User has successfully updated PIN", "then")
 def step_select_update_pin(context):
-    assert context.thisChangePINPage.successfully_changed_pin_modal.is_displayed()
+    assert context.thisChangePINPageQC.successfully_changed_pin_modal.is_displayed()
     context.thisSettingsPage = (
-        context.thisChangePINPage.successfully_changed_pin_modal.select_okay()
+        context.thisChangePINPageQC.successfully_changed_pin_modal.select_okay()
     )
 
 
@@ -295,4 +295,36 @@ def lang_settings_step_impl(context):
             When the user click continue on the biometrics screen 
             Then the user land on the Home screen
         """
+    )
+    
+@overrides("the user wants to update thier PIN", "given")
+def go_to_pin_update(context):
+    context.thisMoreOptionsPageQC= context.thisHomePageQC.select_more()
+    context.thisSettingsPageQC= context.thisMoreOptionsPageQC.select_applicationSettings()
+    context.thisChangePINPageQC= context.thisSettingsPageQC.select_my_pin()
+    
+@overrides('the user enters thier old PIN as "{pin}"', "when")
+def step_enter_old_pin(context, pin):
+    context.thisChangePINPageQC.enter_old_pin(pin)
+    
+@overrides('the user enters thier first PIN as "{pin}"', "when")
+def step_enter_first_pin(context, pin):
+    context.thisChangePINPageQC.enter_pin(pin)
+    
+@overrides("the User selects Change PIN", "when")
+@overrides("the User selects Change PIN", "then")
+def step_select_change_pin(context):
+    context.thisChangePINPageQC.select_change_pin()
+    
+@overrides('the user updates thier PIN to "{pin}"', "when")
+def step_update_pin(context, pin):
+    context.execute_steps(
+        f"""
+        Given the user wants to update thier PIN
+        When the user enters thier old PIN as "369369"
+        And the user enters thier first PIN as "{pin}"
+        And the User re-enters the PIN as "{pin}"
+        And the User selects Change PIN
+        And the User has successfully updated PIN   
+      """
     )

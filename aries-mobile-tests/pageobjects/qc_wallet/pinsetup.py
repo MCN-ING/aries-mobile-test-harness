@@ -37,6 +37,7 @@ class PINSetupPageQC(PINSetupPage):
         second_pin = self.find_by(self.second_pin_locator)
         if self.on_this_page():
             second_pin.click()
+            second_pin.clear()
             second_pin.send_keys(pin)
             return True
         else:
