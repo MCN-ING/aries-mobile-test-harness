@@ -5,7 +5,7 @@ Feature: Secure your Wallet 
   I want to set my security settings to maximum security
 
 
-  @T004-Security @AcceptanceTest @normal @critical
+  @T001-Security @AcceptanceTest @normal @critical
   Scenario: New User Sets Up PIN
     Given the User has accepted the Terms and Conditions
     And the User is on the PIN creation screen
@@ -15,7 +15,7 @@ Feature: Secure your Wallet 
     Then the User transitions to biometric screen
 
 
-  @TCL_PNG_ACC_002.1 @FunctionalTest @ExceptionTest @normal
+  @T002-Security @FunctionalTest @ExceptionTest @normal
   Scenario Outline: New User Sets Up PIN but does not follow conventions
     Given the User has accepted the Terms and Conditions
     And the User is on the PIN creation screen
@@ -32,7 +32,7 @@ Feature: Secure your Wallet 
       | 333752 | The PIN can't have a repetition of the same digit. Please try again. |
       | 65237  | Your PIN is too short. Please try again.                             |
 
-  @TCL_PNG_ACC_002.2 @FunctionalTest @ExceptionTest @normal
+  @T003-Security @FunctionalTest @ExceptionTest @normal
   Scenario: New User Sets Up PIN and checks pin by toggling visibility
     Given the User has accepted the Terms and Conditions
     And the User is on the PIN creation screen
@@ -61,7 +61,7 @@ Feature: Secure your Wallet 
     When the user click continue on the biometrics screen 
     Then the user land on the Home screen
 
-  @T004-Security @AcceptanceTest @normal  @critical
+  @T005-Security @AcceptanceTest @normal  @critical
   Scenario: New User Sets Up PIN and connect to the application with biometrics enabled
     Given the User has accepted the Terms and Conditions
     And the User is on the PIN creation screen
@@ -72,3 +72,45 @@ Feature: Secure your Wallet 
     When the user enable using biometrics to unlock wallet
     And the user click continue on the biometrics screen 
     Then the user land on the Home screen
+
+  # PIN Update Tests
+  # In order to keep my wallet secure with a stronger PIN
+  # As a wallet user i want to change my wallet PIN
+
+  @T006.1-Security @AcceptanceTest @critical
+  Scenario Outline: Wallet User Changes PIN
+    Given the user has setup thier wallet 
+    When the user updates thier PIN to "963963"
+    Then they have access to the app with the new PIN
+
+  @T006.2-Security @FunctionalTest @ExceptionTest @normal
+  Scenario: Wallet User Changes PIN but PINs do not match
+    Given the user has setup thier wallet
+    And the user wants to update thier PIN
+    When the user enters thier old PIN as "369369"
+    And the user enters thier first PIN as "963963"
+    Then they select visibility toggle on the first PIN as "963963"
+    And the User re-enters the PIN as "369363"
+    Then they select visibility toggle on the first PIN as "963963"
+    And the User selects Change PIN
+    Then they are informed that the PINs do not match
+    And the User re-enters the PIN as "963963"
+    Then they select visibility toggle on the first PIN as "963963"
+    And the User selects Change PIN
+    And the User has successfully updated PIN
+    And they have access to the app with the new PIN
+
+  @T006.3-Security @FunctionalTest @ExceptionTest @normal @qc_wallet_not
+  Scenario Outline: User Changes PIN but does not follow conventions
+    Given the user has setup thier wallet
+    And the user wants to update thier PIN
+    When the user enters thier old PIN as "369369"
+    When the User enters the first PIN as <pin>
+    And the User re-enters the PIN as <pin>
+    And the User selects Change PIN
+    Then they are informed of <pin_error>
+
+    Examples:
+      | pin    | pin_error                                                |
+      | 2357   | Your PIN is too short. Please try again.                 |
+      | 27463A | Your PIN needs to only contain digits. Please try again. |

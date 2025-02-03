@@ -10,6 +10,8 @@ from pageobjects.bc_wallet.home import HomePage
 from pageobjects.qc_wallet.settings import SettingsPageQC
 from pageobjects.qc_wallet.welcome_to_qc_wallet import WelcomeToQCWalletModal
 from pageobjects.qc_wallet.moreoptions import MoreOptionsPageQC
+from pageobjects.qc_wallet.notifications import NotificationsPageQC
+
 
 class HomePageQC(HomePage):
     """Home page object"""
@@ -19,6 +21,9 @@ class HomePageQC(HomePage):
     on_this_page_locator = (AppiumBy.NAME, "Home")
     settings_locator = (AppiumBy.ID, "com.ariesbifold:id/Settings")
     moreOptions_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.OptionsPlus")
+    activities_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Activities")
+    credentials_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Credentials")
+    home_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Home")
 
 
     # Modals and Alerts for Home page
@@ -56,3 +61,12 @@ class HomePageQC(HomePage):
             return MoreOptionsPageQC(self.driver)
         else:
             raise Exception(f"App not on the {type(self)} page")
+        
+
+    def select_activities(self):
+        if self.on_this_page():
+            self.find_by(self.activities_locator).click()
+            return NotificationsPageQC(self.driver)
+        else:
+            raise Exception(f"App not on the {type(self)} page")
+

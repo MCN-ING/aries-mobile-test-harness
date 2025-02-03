@@ -7,3 +7,9 @@ Given the Holder has setup thier Wallet and land on the Home screen
 When the Holder opens more options page
 And the Holder open contacts page
 Then the contacts page is displayed 
+
+@T002-contacts @AcceptanceTest
+Scenario: User check what are contacts link
+Given the Holder is on the contacts page and the wallet is empty
+When the Holder click on What are Contacts link
+Then What are Contacts page is displayed 
