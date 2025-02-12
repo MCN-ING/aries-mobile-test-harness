@@ -31,7 +31,7 @@ class CameraPrivacyPolicyPage(BasePage):
         #self.find_by(self.not_now_button_locator, wait_condition=WaitCondition.VISIBILITY_OF_ELEMENT_LOCATED).click()
         return True
 
-    def select_allow(self):
+    def select_continue(self):
         # 26 sec
         # self.find_by(self.continue_button_locator, wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE).click()
         # 19 sec
