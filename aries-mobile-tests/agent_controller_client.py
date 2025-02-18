@@ -51,7 +51,7 @@ async def make_agent_controller_request(
 
 
 def agent_controller_GET(url, topic, operation=None, id=None) -> Tuple[int, str]:
-    agent_url = url + topic
+    agent_url = url + "/" + topic
     if operation:
         agent_url = agent_url + "/" + operation
     if id:

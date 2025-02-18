@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pageobjects.bc_wallet.contacts import ContactsPage
 from pageobjects.bc_wallet.contact import ContactPage
-
+from pageobjects.qc_wallet.what_are_contacts import WhatAreContactsPageQC
 
 class ContactsPageQC(ContactsPage):
     """Contacts page object"""
@@ -12,6 +12,8 @@ class ContactsPageQC(ContactsPage):
     # Locators
     on_this_page_text_locator = "Contacts"
     contact_locator = (AppiumBy.ID, "com.ariesbifold:id/Contact")
+    what_are_contacts_locator = (AppiumBy.ID, "com.ariesbifold:id/WhatAreContacts?")
+
 
     def on_this_page(self):     
         return super().on_this_page() 
@@ -39,3 +41,10 @@ class ContactsPageQC(ContactsPage):
                 return False
         else:
             raise Exception(f"App not on the {type(self)}")
+
+    def select_what_are_contacts_link(self):
+        if self.on_this_page():
+            self.find_by(self.what_are_contacts_locator).click()
+            return WhatAreContactsPageQC(self.driver)
+        else:
+            raise Exception(f"App not on the {type(self)} page")

@@ -7,7 +7,7 @@ import re
 import unicodedata
 
 class RequestAuthenticationAttestationQC(BasePage):
-    """ Request Authentication Attestation """
+    """ Request Authentication Attestation page Object """
     
     #Locators
     en_title_text_locator = "Request your Authentication Attestation"

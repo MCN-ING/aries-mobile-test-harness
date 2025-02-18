@@ -24,6 +24,7 @@ class HomePageQC(HomePage):
     activities_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Activities")
     credentials_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Credentials")
     home_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Home")
+    see_all_notifications_link_locator = (AppiumBy.NAME, "See all notifications")
 
     # Modals and Alerts for Home page
     welcome_to_qc_wallet_modal = WelcomeToQCWalletModal
@@ -61,6 +62,7 @@ class HomePageQC(HomePage):
         else:
             raise Exception(f"App not on the {type(self)} page")
         
+
     def select_activities(self):
         if self.on_this_page():
             self.find_by(self.activities_locator).click()
@@ -74,3 +76,11 @@ class HomePageQC(HomePage):
             return CredentialsPageQC(self.driver)
         else:
             raise Exception(f"App not on the {type(self)} page")
+        
+    def select_see_all_notifications_link(self):
+        if self.on_this_page():
+            self.find_by(self.see_all_notifications_link_locator).click()
+            return NotificationsPageQC(self.driver)
+        else:
+            raise Exception(f"App not on the {type(self)} page")
+        

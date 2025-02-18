@@ -2,7 +2,7 @@
   "capabilities": {
     "lt:options": {
       "w3c": true,
-      "deviceName": "iPhone.*",
+      "deviceName": "iPhone 15.*",
       "platformName": "iOS",
       "build": "QCWallet",
       "name": "QCTests-iOS-Python",
