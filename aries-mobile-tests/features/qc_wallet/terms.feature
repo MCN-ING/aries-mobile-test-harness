@@ -28,3 +28,10 @@ As a new holder, i want to review the terms and conditions
     Then your credentials modal appears
     When the user click done button 
     Then the user land on the Home screen after using app guides
+
+  @T004-useAppGuides @AcceptanceTest 
+  Scenario: the user land on the Home screen after clicking "Don't use app guides" button
+    Given the user has setup the wallet
+    And the user land on the Home screen and the modal welcome to QC Wallet is displayed
+    When the user click "Don't use app guides" button 
+    Then the user land on the Home screen

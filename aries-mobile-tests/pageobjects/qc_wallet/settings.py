@@ -33,7 +33,7 @@ class SettingsPageQC(SettingsPage):
         # else:
         #     raise Exception(f"App not on the {type(self)} page")
 
-    def select_language(self):
+    def select_display_language(self):
         if self.on_this_page():
             self.find_by(self.display_language_button).click()
             return LanguageFormPageQC(self.driver)

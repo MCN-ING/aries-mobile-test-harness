@@ -328,3 +328,9 @@ def step_update_pin(context, pin):
         And the User has successfully updated PIN   
       """
     )
+    
+@when("they relaunch the app")
+def step_impl(context):
+    context.driver.activate_app(
+        context.driver.capabilities[get_package_or_bundle_id(context)]
+    )

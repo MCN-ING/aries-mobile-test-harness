@@ -1,7 +1,6 @@
 @ActivitiesQC @qc_wallet
 Feature: check your Wallet activities
 
-
  @T001-Activities @FunctionalTest @normal
   Scenario: User open the activities page to check notifications
     Given the Holder has setup thier Wallet and land on the Home screen
