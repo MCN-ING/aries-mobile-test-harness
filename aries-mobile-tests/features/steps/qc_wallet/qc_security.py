@@ -329,7 +329,7 @@ def step_update_pin(context, pin):
       """
     )
     
-@when("they relaunch the app")
+@overrides("they relaunch the app", "when")
 def step_impl(context):
     context.driver.activate_app(
         context.driver.capabilities[get_package_or_bundle_id(context)]

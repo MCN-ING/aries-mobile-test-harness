@@ -8,8 +8,8 @@ class AddACredentialModal(WelcomeToBCWalletModal):
     """Add a credential Modal page object"""
 
     # Locators
-    add_certificate_button_locator = (AppiumBy.NAME, "com.ariesbifold:id/AddMyDigitalGovernmentAuthenticationCertificate")
-    sqan_qr_code_locator = (AppiumBy.NAME, "com.ariesbifold:id/ScanAQRCode")
+    add_certificate_button_locator = (AppiumBy.ID, "com.ariesbifold:id/AddMyDigitalGovernmentAuthenticationCertificate")
+    sqan_qr_code_locator = (AppiumBy.ID, "com.ariesbifold:id/ScanAQRCode")
     
     def __init__(self, driver):
         super().__init__(driver)

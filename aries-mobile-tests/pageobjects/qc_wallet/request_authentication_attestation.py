@@ -13,7 +13,6 @@ class RequestAuthenticationAttestationQC(BasePage):
     en_title_text_locator = "Request your Authentication Attestation"
     fr_title_text_locator = "Demander son Attestation d’authentification"
     receive_my_attestation = (AppiumBy.ID, "com.ariesbifold:id/StartProcess")
-    expected_url_part = "authentification.si.gouv.qc.ca"
     tab_bar_locator = (AppiumBy.NAME, "TabBarItemTitle")
     
     def __init__(self, driver):
@@ -44,7 +43,7 @@ class RequestAuthenticationAttestationQC(BasePage):
             logging.info(f"URL actuelle détectée dans Safari - current_url: {current_url}")
 
             if not current_url:
-                logging.error("❌ Aucun élément URL trouvé dans Safari.")
+                logging.error("Aucun élément URL trouvé dans Safari.")
                 return False
             raw_url = current_url.strip()
             # Appliquer le nettoyage de l'URL
@@ -54,9 +53,9 @@ class RequestAuthenticationAttestationQC(BasePage):
                 logging.info("✅ Le site attendu est bien ouvert.")
                 return True
             else:
-                logging.warning(f"❌ Mauvaise URL ! Attendu : {url}  Actuel : {cleaned_url}")
+                logging.warning(f"Mauvaise URL ! Attendu : {url}  Actuel : {cleaned_url}")
                 return False
 
         except Exception as e:
-            logging.error(f"❌ Impossible de récupérer l'URL dans Safari : {str(e)}")
+            logging.error(f"Impossible de récupérer l'URL dans Safari : {str(e)}")
             return False
