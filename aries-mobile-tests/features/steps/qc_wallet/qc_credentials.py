@@ -2,12 +2,14 @@ from behave import given, then, when
 from pageobjects.qc_wallet.request_authentication_attestation import RequestAuthenticationAttestationQC
 from pageobjects.qc_wallet.camera_privacy_policy import CameraPrivacyPolicyPageQC
 from pageobjects.qc_wallet.scan import ScanQRCodePageQC
-
+from pageobjects.qc_wallet.navbar import NavBarQC
 import logging
 
 @when("the user open credentials page")
 def cred_page_step_impl(context):
-    context.thisCredentialsPageQC = context.thisHomePageQC.select_credentials()
+    if hasattr(context, "thisNavBarQC") == False:
+        context.thisNavBarQC= NavBarQC(context.driver)
+    context.thisCredentialsPageQC = context.thisNavBarQC.select_credentials()
     
 @when("the user click on Add your First Credential button")
 def cred_add_step_impl(context):
@@ -24,7 +26,6 @@ def link_digital_certificate_impl(context):
 @then("the page Request your authentication certificate is displayed")
 def request_certificate_impl(context):
     context.thisRequestAuthenticationAttestationQC = RequestAuthenticationAttestationQC(context.driver)
-    print(f"Valeur de context.thisRequestAuthenticationAttestationQC: {context.thisRequestAuthenticationAttestationQC}")
     assert context.thisRequestAuthenticationAttestationQC.on_this_page()
         
 @when("the user click on the button Receive my attestation")
@@ -46,16 +47,11 @@ def allow_camera_step_impl(context):
 @when("the user click continue button")
 def continue_step_impl(context):
     context.thisCameraPrivacyPolicyPageQC.select_continue()
-    
-@then("modal “Portefeuille QC” Would Like to Access the Camera appears")
-def modal_step_impl(context):
-    logging.info(f"Is Modal displayed: {context.thisCameraPrivacyPolicyPageQC.portefeuil_qc_would_like_access_camera_modal.is_displayed()}")
-    assert context.thisCameraPrivacyPolicyPageQC.portefeuil_qc_would_like_access_camera_modal.is_displayed()
    
-@when("the user click Allow for the camera access")
+@when("the user Allow the camera access")
 def click_allow_step_impl(context):
-    if context.thisCameraPrivacyPolicyPageQC.portefeuil_qc_would_like_access_camera_modal.is_displayed():
-        context.thisCameraPrivacyPolicyPageQC.portefeuil_qc_would_like_access_camera_modal.select_allow()
+    if context.thisCameraPrivacyPolicyPageQC.identiQc_access_camera_permission_modal.is_displayed():
+        context.thisCameraPrivacyPolicyPageQC.identiQc_access_camera_permission_modal.select_allow()
     else:
          print("portefeuil_qc_would_like_access_camera_modal is Not displayed")
     
@@ -64,3 +60,13 @@ def camera_step_impl(context):
     if not hasattr(context, 'thisScanQRCodePageQC'):
         context.thisScanQRCodePageQC = ScanQRCodePageQC(context.driver)
     assert context.thisScanQRCodePageQC.on_this_page()
+    
+
+@then("pop up Access the Camera appears")
+@then("modal “Portefeuille QC” Would Like to Access the Camera appears")
+def modal_step_impl(context):
+    assert context.thisCameraPrivacyPolicyPageQC.identiQc_access_camera_permission_modal.is_displayed()
+    
+@when("the user click Only this time in the camera pop up permission access")
+def only_this_time_impl(context):
+    context.thisCameraPrivacyPolicyPageQC.identiQc_access_camera_permission_modal.select_only_this_time()

@@ -2,13 +2,13 @@
   "capabilities": {
     "lt:options": {
       "w3c": true,
-      "deviceName": "Galaxy.*,Pixel.*,Nexus.*",
+      "deviceName": "Galaxy S21",
       "platformName": "Android",
       "platformVersion": "11",
       "build": "QCWallet-tests",
       "name": "QCWalletTests",
-      "app": "lt://APP10160471311730128645491256",
-      "autoGrantPermissions": true,
+      "app": "lt://APP10160561931740665918050293",
+      "autoGrantPermissions": false,
       "enableImageInjection": true,
       "enableBiometricsAuthentication": true,
       "media": "lt://MEDIA14a54efe064642f9a9cf39ab5d189751",

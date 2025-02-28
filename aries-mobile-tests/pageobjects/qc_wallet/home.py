@@ -40,42 +40,11 @@ class HomePageQC(HomePage):
             self.on_this_page_locator = (AppiumBy.NAME, "Accueil")
         return super().on_this_page()
 
-    def select_settings(self):
-        if self.on_this_page():
-            self.find_by(self.settings_locator).click()
-
-            # return a new page object for the settings page
-            return SettingsPageQC(self.driver)
-        else:
-            raise Exception(f"App not on the {type(self)} page")
-
     def select_dismiss(self):
         self.find_by(
             self.dismiss_button_locator,
             wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE,
-        ).click()
-
-    def select_more(self):
-        if self.on_this_page():
-            self.find_by(self.moreOptions_locator).click()
-            return MoreOptionsPageQC(self.driver)
-        else:
-            raise Exception(f"App not on the {type(self)} page")
-        
-
-    def select_activities(self):
-        if self.on_this_page():
-            self.find_by(self.activities_locator).click()
-            return NotificationsPageQC(self.driver)
-        else:
-            raise Exception(f"App not on the {type(self)} page")
-
-    def select_credentials(self):
-        if self.on_this_page():
-            self.find_by(self.credentials_locator).click()
-            return CredentialsPageQC(self.driver)
-        else:
-            raise Exception(f"App not on the {type(self)} page")
+        ).click()        
         
     def select_see_all_notifications_link(self):
         if self.on_this_page():

@@ -6,6 +6,9 @@ from pageobjects.qc_wallet.about import AboutPageQC
 from pageobjects.qc_wallet.qc_help_center_pages.what_is_a_pin import WhatIsAPINPageQC
 from pageobjects.qc_wallet.qc_help_center_pages.what_is_biometrics import WhatIsBiometricsPageQC
 from pageobjects.qc_wallet.notifications import NotificationsPageQC
+from pageobjects.qc_wallet.navbar import NavBarQC
+from pageobjects.qc_wallet.moreoptions import MoreOptionsPageQC
+
 
 @given("the Holder is on the help center page")
 def step_impl(context):
@@ -20,7 +23,9 @@ def step_impl(context):
 
 @when("the Holder opens more options page")
 def open_more_page_step_impl(context):
-    context.thisMoreOptionsPageQC= context.thisHomePageQC.select_more()
+    if hasattr(context, "thisNavBarQC") == False:
+        context.thisNavBarQC= NavBarQC(context.driver)
+    context.thisMoreOptionsPageQC= context.thisNavBarQC.select_more()
     
 @when("the Holder open contacts page")
 def open_contacts_page_step_impl(context):
@@ -145,7 +150,7 @@ def return_step_impl(context):
 
 @when("the Holder click on Activities")
 def activities_home_step_impl(context):
-    context.thisNotificationsPageQC= context.thisHomePageQC.select_activities()
+    context.thisNotificationsPageQC= context.thisNavBarQC.select_activities()
 
 @then("notifications page is displayed")
 def activities_display_step_impl(context):

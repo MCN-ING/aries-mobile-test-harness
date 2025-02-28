@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 from enum import Enum
+from time import sleep
 
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.common.touch_action import TouchAction
@@ -279,15 +280,54 @@ class BasePage(object):
         except:
             return False
 
+    # def swipe_down(self):
+    #     screen_size = self.driver.get_window_size()
+    #     x = int(int(screen_size["width"]) * 0.5)
+    #     y_start = int(int(screen_size["height"]) * 0.8)
+    #     y_end = int(int(screen_size["height"]) * 0.2)
+    #     touch_action = TouchAction(self.driver)
+    #     touch_action.press(x=x, y=y_start).wait(500).move_to(
+    #         x=x, y=y_end
+    #     ).release().perform()
+    
     def swipe_down(self):
+        """
+        Swipes down on the screen to scroll content.
+        This method should work for both iOS and Android.
+        """
         screen_size = self.driver.get_window_size()
-        x = int(int(screen_size["width"]) * 0.5)
-        y_start = int(int(screen_size["height"]) * 0.8)
-        y_end = int(int(screen_size["height"]) * 0.2)
-        touch_action = TouchAction(self.driver)
-        touch_action.press(x=x, y=y_start).wait(500).move_to(
-            x=x, y=y_end
-        ).release().perform()
+        width = screen_size["width"]
+        height = screen_size["height"]
+        
+        # Calculate swipe coordinates
+        start_x = int(width * 0.5)  # Middle of screen
+        start_y = int(height * 0.8)  # Near bottom
+        end_x = int(width * 0.5)    # Middle of screen
+        end_y = int(height * 0.2)   # Near top
+        
+        if self.current_platform.lower() == "android":
+            try:
+                # Android specific implementation
+                touch_action = TouchAction(self.driver)
+                touch_action.press(x=start_x, y=start_y) \
+                        .wait(500) \
+                        .move_to(x=end_x, y=end_y) \
+                        .release() \
+                        .perform()
+            except Exception as e:
+                # Alternative method for Android if TouchAction fails
+                self.driver.swipe(start_x, start_y, end_x, end_y, 500)
+        else:
+            # iOS implementation - keep your existing approach
+            touch_action = TouchAction(self.driver)
+            touch_action.press(x=start_x, y=start_y) \
+                    .wait(500) \
+                    .move_to(x=end_x, y=end_y) \
+                    .release() \
+                    .perform()
+        
+        # Give the UI time to update after the swipe
+        sleep(0.5)
 
     def scroll_to_top(self):
         # Get the initial page source

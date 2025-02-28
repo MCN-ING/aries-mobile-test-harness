@@ -2,12 +2,12 @@
   "capabilities": {
     "lt:options": {
       "w3c": true,
-      "deviceName": "iPhone.*",
-      "platformName": "iOS",
-      "build": "QCWalletIOSTests",
-      "name": "QCTests-iOS-Python",
-      "app": "lt://APP10160471311738953265578381",
-      "autoAcceptAlerts": false,
+      "deviceName": "Galaxy S21",
+      "platformName": "Android",
+      "platformVersion": "11",
+      "build": "QCTests",
+      "name": "QCWalletTests",
+      "app": "lt://APP10160561931740665918050293",
       "autoGrantPermissions": false,
       "enableImageInjection": true,
       "enableBiometricsAuthentication": true,

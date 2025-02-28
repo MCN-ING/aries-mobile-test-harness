@@ -15,7 +15,7 @@ Feature: Secure your Wallet 
     Then the User transitions to biometric screen
 
 
-  @T002-Security @FunctionalTest @ExceptionTest @normal
+  @T002-Security @FunctionalTest @ExceptionTest @normal 
   Scenario Outline: New User Sets Up PIN but does not follow conventions
     Given the User has accepted the Terms and Conditions
     And the User is on the PIN creation screen
@@ -78,10 +78,14 @@ Feature: Secure your Wallet 
   # As a wallet user i want to change my wallet PIN
 
   @T006.1-Security @AcceptanceTest @critical
-  Scenario Outline: Wallet User Changes PIN
+  Scenario: Wallet User Changes PIN
     Given the user has setup thier wallet 
     When the user updates thier PIN to "963963"
-    Then they have access to the app with the new PIN
+    Then the modal Successfully changed your PIN appears
+    When the user click Okay in the modal Successfully changed your PIN
+    Then the user land on the settings screen
+    When the user go check the history page
+    Then notification wallet pin update is added in the history page
 
   @T006.2-Security @FunctionalTest @ExceptionTest @normal
   Scenario: Wallet User Changes PIN but PINs do not match
@@ -89,16 +93,19 @@ Feature: Secure your Wallet 
     And the user wants to update thier PIN
     When the user enters thier old PIN as "369369"
     And the user enters thier first PIN as "963963"
-    Then they select visibility toggle on the first PIN as "963963"
+    And they select visibility toggle on the first PIN as "963963"
     And the User re-enters the PIN as "369363"
-    Then they select visibility toggle on the first PIN as "963963"
+    And they select visibility toggle on the first PIN as "963963"
     And the User selects Change PIN
     Then they are informed that the PINs do not match
-    And the User re-enters the PIN as "963963"
-    Then they select visibility toggle on the first PIN as "963963"
+    When the User re-enters the PIN as "963963"
+    And they select visibility toggle on the first PIN as "963963"
     And the User selects Change PIN
-    And the User has successfully updated PIN
-    And they have access to the app with the new PIN
+    # And the User has successfully updated PIN
+    Then the modal Successfully changed your PIN appears
+    When the user click Okay in the modal Successfully changed your PIN
+    And the user close and relaunch the application
+    Then they have access to the app with the new PIN
 
   @T006.3-Security @FunctionalTest @ExceptionTest @normal @qc_wallet_not
   Scenario Outline: User Changes PIN but does not follow conventions

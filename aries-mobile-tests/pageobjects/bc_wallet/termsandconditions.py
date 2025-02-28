@@ -23,6 +23,11 @@ class TermsAndConditionsPage(BasePage):
     back_aid_locator = (AppiumBy.ACCESSIBILITY_ID, "Back")
 
     def on_this_page(self):
+        language = self.get_app_language()
+        if language == "French":
+             self.on_this_page_text_locator = "Conditions"
+             self.on_this_page_locator = (AppiumBy.NAME, "Conditions d'utilisation")
+             self.back_aid_locator = (AppiumBy.ACCESSIBILITY_ID, "Précédent")
         if self.current_platform.lower() == "Android".lower():
             return super().on_this_page(self.on_this_page_text_locator)
         return super().on_this_page(self.on_this_page_locator)

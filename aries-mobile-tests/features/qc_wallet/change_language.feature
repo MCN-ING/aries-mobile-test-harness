@@ -12,6 +12,7 @@ Feature: Language
     And the holder changes app language to "French"
     Then the language changes automatically to "French"
 
+  #Launching the app renconter a problem with LambdatesT
   @T002.1-Language @FunctionalTest @extra_config_language_1
   Scenario: Holder quits app after changing language
     Given the holder has initially selected "English" as the language
@@ -20,7 +21,7 @@ Feature: Language
     And the holder changes app language to "French"
     Then the language changes automatically to "French"
     When they have closed the app
-    And they relaunch the app
+    And they relaunch the app and authenticates with thier PIN
     Then the language is set to "French"
 
   @T001.2-Language @AcceptanceTest @extra_config_language_2

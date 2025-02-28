@@ -20,6 +20,7 @@ from pageobjects.qc_wallet.home import HomePageQC
 from pageobjects.qc_wallet.settings import SettingsPageQC
 from pageobjects.qc_wallet.languageform import LanguageFormPageQC
 from pageobjects.qc_wallet.moreoptions import MoreOptionsPageQC
+from pageobjects.qc_wallet.navbar import NavBarQC
 
 # import Page Objects needed
 # from pageobjects.bc_wallet.languagesplash import LanguageSplashPage
@@ -55,7 +56,9 @@ def change_lang_step_impl(context):
             Then the user land on the Home screen
         """
     )
-    context.thisMoreOptionsPageQC= context.thisHomePageQC.select_more()
+    if hasattr(context, "thisNavBarQC") == False:
+        context.thisNavBarQC= NavBarQC(context.driver)
+    context.thisMoreOptionsPageQC= context.thisNavBarQC.select_more()
     context.thisSettingsPageQC= context.thisMoreOptionsPageQC.select_applicationSettings()
 
 

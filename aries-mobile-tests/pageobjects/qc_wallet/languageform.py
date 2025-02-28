@@ -9,7 +9,7 @@ class LanguageFormPageQC(BasePage):
 
     #Locators
     english_title_locator = (AppiumBy.NAME, "Display Language") 
-    french_title_locator =  (AppiumBy.NAME, "Langue d'affichage") 
+    frensh_title_locator = (AppiumBy.NAME, "Langue d'affichage") 
     english_button_locator = (AppiumBy.ID, "com.ariesbifold:id/en") 
     french_button_locator = (AppiumBy.ID, "com.ariesbifold:id/fr") 
 
@@ -19,7 +19,6 @@ class LanguageFormPageQC(BasePage):
     def on_this_page(self):
         return super().on_this_page(self.english_title_locator) or super().on_this_page(self.french_title_locator)
           
-          
     def select_language(self, language):
         if self.on_this_page():
             if language == 'English':
@@ -28,15 +27,7 @@ class LanguageFormPageQC(BasePage):
                 self.find_by(self.french_button_locator).click()
         else:
             raise Exception(f"App not on the {type(self)} page")
-            
-    def get_current_language(self):
-        if self.is_displayed(self.english_title_locator):
-            return "English"
-        elif self.is_displayed(self.french_title_locator):
-            return "French"
-        else:
-            raise Exception(f"Unable to determine the current language on the {type(self)} page")
- 
+                
     def is_displayed(self, locator):
         try:
             element = self.find_by(locator)
@@ -44,3 +35,13 @@ class LanguageFormPageQC(BasePage):
         except Exception:
             return False
         
+    def get_current_language(self):
+        logging.info("Checking for the current language...")
+        if self.is_displayed(self.frensh_title_locator):
+            logging.info("Current language detected: French")
+            return "French"
+        elif self.is_displayed(self.english_title_locator):
+            logging.info("Current language detected: English")
+            return "English"
+        else:
+            raise Exception(f"Unable to determine the current language on the {type(self)} page")
