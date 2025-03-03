@@ -9,8 +9,7 @@ class HistoryPageQC(BasePage):
     fr_title_text_locator = "Activités"
     en_subtitle_locator = "History"
     fr_subtitle_locator = "Historique"
-    # notification_locator = (AppiumBy.ID, "com.ariesbifold:id/View")
-    notification_locator = (AppiumBy.XPATH, "//*[starts-with(@resource-id, 'com.ariesbifold:id/View')]")
+
 
     def __init__(self, driver):
         super().__init__(driver)
