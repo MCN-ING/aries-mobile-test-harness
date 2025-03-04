@@ -26,8 +26,8 @@ class NavBarQC(BasePage):
     
 
     def select_home(self):
-        self.find_by(self.notifications_locator).click()
-        return HomePage(self.driver)
+        self.find_by(self.home_locator).click()
+        return HomePageQC(self.driver)
         
     def select_more(self):
         self.find_by(self.moreOptions_locator).click()

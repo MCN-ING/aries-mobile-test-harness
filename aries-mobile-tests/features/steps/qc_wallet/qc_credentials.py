@@ -40,7 +40,7 @@ def government_site_impl(context):
 def scan_qr_code_impl(context):
     context.thisCameraPrivacyPolicyPageQC = context.thisCredentialsPageQC.add_a_credential_modal.select_scan_qr_code()
     
-@then("allow camera to use page is displayed")
+@then("allow camera use page is displayed")
 def allow_camera_step_impl(context):
     assert context.thisCameraPrivacyPolicyPageQC.on_this_page()
     
@@ -70,3 +70,12 @@ def modal_step_impl(context):
 @when("the user click Only this time in the camera pop up permission access")
 def only_this_time_impl(context):
     context.thisCameraPrivacyPolicyPageQC.identiQc_access_camera_permission_modal.select_only_this_time()
+    
+@when("the Holder select back on the scan camera page and go to Home page")
+def select_back_step_impl(context):
+    if context.thisHomePageQC.on_this_page() == False:
+        logging.info("Go to home page...")
+        context.thisScanQRCodePageQC= ScanQRCodePageQC(context.driver)
+        context.thisScanQRCodePageQC.select_back()
+        context.thisNavBarQC= NavBarQC(context.driver)
+        context.thisHomePageQC = context.thisNavBarQC.select_home()

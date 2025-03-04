@@ -23,7 +23,7 @@ Feature: Credentials
         And the user click on Add your First Credential button
         Then a modal Add a Credential appear
         When user click on Scan a QR code button showed in the pop up
-        Then allow camera to use page is displayed
+        Then allow camera use page is displayed
         When the user click continue button
         Then pop up Access the Camera appears
         When the user Allow the camera access
@@ -36,24 +36,21 @@ Feature: Credentials
         And the user click on Add your First Credential button
         Then a modal Add a Credential appear
         When user click on Scan a QR code button showed in the pop up
-        Then allow camera to use page is displayed
+        Then allow camera use page is displayed
         When the user click continue button
         Then pop up Access the Camera appears
         When the user click Only this time in the camera pop up permission access
         Then the camera is opened in the page Scan a QR code
 
 
-    @T005-Connect @critical @AcceptanceTest
+    @T005-Connect @critical @AcceptanceTest @test1
     Scenario:  Scan QR code to recieve a credential offer (connecting with the issuer)
         Given the user has setup thier wallet
         When the user open credentials page
         And the user click on Add your First Credential button
         Then a modal Add a Credential appear
         When the Holder scans the QR code sent by the "issuer"
-        Then pop up Access the Camera appears
-        When the user Allow the camera access
-        And the Holder click on "see all notifications" link 
+        And the Holder select back on the scan camera page and go to Home page
+        When the Holder click on "see all notifications" link 
         And the Holder click on History
-        # And the Connecting completes successfully
-        Then there is a connection between "issuer" and Holder
-
+        Then connection established notification
