@@ -5,7 +5,6 @@ class ScanQRCodePageQC(ScanPage):
     """ Scan QR code Page object  """
     
     #Locators
-    back_locator = (AppiumBy.ID, "com.ariesbifold:id/Back")
     scan_locator = (AppiumBy.ID, "com.ariesbifold:id/ScanNow")
     flash_locator = (AppiumBy.ID, "com.ariesbifold:id/ScanTorch")
     back_locator = (AppiumBy.ID, "com.ariesbifold:id/Back")

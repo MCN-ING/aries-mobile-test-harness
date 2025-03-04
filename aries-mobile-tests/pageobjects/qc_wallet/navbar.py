@@ -12,14 +12,10 @@ class NavBarQC(BasePage):
     """Nav Bar Footer object"""
 
     # Locators
-    on_this_page_text_locator = "Home"
-    on_this_page_locator = (AppiumBy.NAME, "Home")
-    settings_locator = (AppiumBy.ID, "com.ariesbifold:id/Settings")
     moreOptions_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.OptionsPlus")
     activities_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Activities")
     credentials_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Credentials")
     home_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Home")
-    see_all_notifications_link_locator = (AppiumBy.NAME, "See all notifications")
     
     def __init__(self, driver):
         self.driver = driver
