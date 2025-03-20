@@ -20,6 +20,7 @@ from pageobjects.qc_wallet.home import HomePageQC
 from pageobjects.qc_wallet.settings import SettingsPageQC
 from pageobjects.qc_wallet.languageform import LanguageFormPageQC
 from pageobjects.qc_wallet.moreoptions import MoreOptionsPageQC
+from pageobjects.qc_wallet.navbar import NavBarQC
 
 # import Page Objects needed
 # from pageobjects.bc_wallet.languagesplash import LanguageSplashPage
@@ -55,17 +56,17 @@ def change_lang_step_impl(context):
             Then the user land on the Home screen
         """
     )
-    context.thisMoreOptionsPageQC= context.thisHomePageQC.select_more()
+    if hasattr(context, "thisNavBarQC") == False:
+        context.thisNavBarQC= NavBarQC(context.driver)
+    context.thisMoreOptionsPageQC= context.thisNavBarQC.select_more()
     context.thisSettingsPageQC= context.thisMoreOptionsPageQC.select_applicationSettings()
 
 
 @given('they have selected "{different_language}"')
 @when('the holder changes app language to "{different_language}"')
 def change_lang_step_impl(context, different_language):
-    if hasattr(context, "thisSettingsPageQC") == False:
-        context.thisSettingsPageQC = SettingsPageQC(context.driver)
-    # context.thisSettingsPageQC = SettingsPageQC(context.driver)
-    context.thisLanguageFormPageQC = context.thisSettingsPageQC.select_language()
+    if hasattr(context, "thisLanguageFormPageQC") == False:
+        context.thisLanguageFormPageQC = thisLanguageFormPageQC(context.driver)
     context.thisLanguageFormPageQC.select_language(different_language)
 
 
@@ -84,3 +85,7 @@ def verify_lang_change_on_relaunch_app_step_impl(context, different_language):
         sleep(5)
         context.thisPINPage = PINPage(context.driver)
         assert context.thisPINPage.on_this_page(different_language)
+        
+@when("the holder select Display language")
+def display_language_step_impl(context):
+       context.thisLanguageFormPageQC = context.thisSettingsPageQC.select_display_language()

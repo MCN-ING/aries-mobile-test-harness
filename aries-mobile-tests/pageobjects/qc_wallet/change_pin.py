@@ -39,7 +39,7 @@ class ChangePINPageQC(PINSetupPageQC):
             raise Exception(f"App not on the {type(self)} page")
 
 
-class SuccessfullyChangedPINModalQC(SuccessfullyChangedPINModal):
+class SuccessfullyChangedPINModalQC(BasePage):
     """Successully Changed PIN Modal page object"""
 
     # Locators
@@ -48,5 +48,27 @@ class SuccessfullyChangedPINModalQC(SuccessfullyChangedPINModal):
             self.okay_locator, wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE
         ).click()
         from pageobjects.qc_wallet.settings import SettingsPageQC
-
         return SettingsPageQC(self.driver)
+    
+        # Locators
+    on_this_page_text_locator = "Successfully changed your PIN"
+    success_title_locator = (AppiumBy.ID, "com.ariesbifold:id/HeaderText")
+    success_details_locator = (AppiumBy.ID, "com.ariesbifold:id/BodyText")
+    okay_locator = (AppiumBy.ID, "com.ariesbifold:id/Okay") 
+
+    def on_this_page(self):
+        return super().on_this_page(self.on_this_page_text_locator)
+    
+    def is_displayed(self):
+        return self.on_this_page()
+
+    def get_success_title(self) -> str:
+        return self.find_by(self.success_title_locator).text
+        
+    def get_success_message(self) -> str:
+        return self.find_by(self.success_details_locator).text
+
+    # def select_okay(self):
+    #     self.find_by(self.okay_locator, wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE).click()
+    #     from pageobjects.bc_wallet.settings import SettingsPage
+    #     return SettingsPage(self.driver)

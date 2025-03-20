@@ -11,7 +11,7 @@ from pageobjects.qc_wallet.settings import SettingsPageQC
 from pageobjects.qc_wallet.welcome_to_qc_wallet import WelcomeToQCWalletModal
 from pageobjects.qc_wallet.moreoptions import MoreOptionsPageQC
 from pageobjects.qc_wallet.notifications import NotificationsPageQC
-
+from pageobjects.qc_wallet.credentials import CredentialsPageQC
 
 class HomePageQC(HomePage):
     """Home page object"""
@@ -24,7 +24,7 @@ class HomePageQC(HomePage):
     activities_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Activities")
     credentials_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Credentials")
     home_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Home")
-
+    see_all_notifications_link_locator = (AppiumBy.NAME, "See all notifications")
 
     # Modals and Alerts for Home page
     welcome_to_qc_wallet_modal = WelcomeToQCWalletModal
@@ -40,33 +40,16 @@ class HomePageQC(HomePage):
             self.on_this_page_locator = (AppiumBy.NAME, "Accueil")
         return super().on_this_page()
 
-    def select_settings(self):
-        if self.on_this_page():
-            self.find_by(self.settings_locator).click()
-
-            # return a new page object for the settings page
-            return SettingsPageQC(self.driver)
-        else:
-            raise Exception(f"App not on the {type(self)} page")
-
     def select_dismiss(self):
         self.find_by(
             self.dismiss_button_locator,
             wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE,
-        ).click()
-
-    def select_more(self):
-        if self.on_this_page():
-            self.find_by(self.moreOptions_locator).click()
-            return MoreOptionsPageQC(self.driver)
-        else:
-            raise Exception(f"App not on the {type(self)} page")
+        ).click()        
         
-
-    def select_activities(self):
+    def select_see_all_notifications_link(self):
         if self.on_this_page():
-            self.find_by(self.activities_locator).click()
+            self.find_by(self.see_all_notifications_link_locator).click()
             return NotificationsPageQC(self.driver)
         else:
             raise Exception(f"App not on the {type(self)} page")
-
+        
