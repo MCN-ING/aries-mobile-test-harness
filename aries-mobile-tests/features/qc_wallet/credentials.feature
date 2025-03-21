@@ -43,7 +43,7 @@ Feature: Credentials
         Then the camera is opened in the page Scan a QR code
 
 
-    @T005-Connect @critical @AcceptanceTest @test1
+    @T005-Connect @critical @AcceptanceTest
     Scenario:  Scan QR code to recieve a credential offer (connecting with the issuer)
         Given the user has setup thier wallet
         When the user open credentials page
@@ -53,4 +53,4 @@ Feature: Credentials
         And the Holder select back on the scan camera page and go to Home page
         When the Holder click on "see all notifications" link 
         And the Holder click on History
-        Then connection established notification
+        Then connection established notification is added to the history page 
