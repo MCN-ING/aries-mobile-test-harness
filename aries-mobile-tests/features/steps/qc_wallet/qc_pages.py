@@ -150,6 +150,8 @@ def return_step_impl(context):
 
 @when("the Holder click on Activities")
 def activities_home_step_impl(context):
+    if not hasattr(context, "thisNavBarQC"):
+        context.thisNavBarQC = NavBarQC(context.driver)
     context.thisNotificationsPageQC= context.thisNavBarQC.select_activities()
 
 @then("notifications page is displayed")

@@ -57,9 +57,9 @@ def step_impl(context, agent):
         logging.info("already on the home page")
         context.thisCameraPrivacyPolicyPageQC = context.thisHomePageQC.select_scan_qr_code()
                 
-    elif hasattr(context, "thisCredentialsPageQC") == True:
-        logging.info("already on the credential page")
-        context.thisCameraPrivacyPolicyPageQC = context.thisCredentialsPageQC.add_a_credential_modal.select_scan_qr_code()
+    # elif hasattr(context, "thisCredentialsPageQC") == True:
+    #     logging.info("already on the credential page")
+    #     context.thisCameraPrivacyPolicyPageQC = context.thisCredentialsPageQC.add_a_credential_modal.select_scan_qr_code()
 
     # If this is the first time the user selects scan, then they will get a Camera Privacy Policy that needs to be dismissed
     # TODO only do this if the platorm is iOS. Android is not showing the policy page at present in Sauce Labs becasue we have autoGrantPermissions on.
@@ -96,3 +96,17 @@ def step_impl(context):
     # # if connected the holder should be on the contact page
     # # TODO that is unless there is a Goal Code
     # context.thisContactPage = ContactPage(context.driver)
+    
+@overrides('there is a connection between "{agent}" and Holder', "then")
+def step_impl(context, agent):
+    # Check the contacts for a new connection
+
+    if agent == "issuer":
+        assert context.issuer.connected()
+    elif agent == "verifier":
+        assert context.verifier.connected()
+    else:
+        raise Exception(f"Invalid agent type: {agent}")
+
+    # # If connected the contact should be on the contact chat page
+    # assert context.thisContactPage.on_this_page()

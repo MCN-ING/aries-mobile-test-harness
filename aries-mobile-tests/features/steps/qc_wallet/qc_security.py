@@ -387,7 +387,7 @@ def go_to_history(context):
         """
     )
     
-@then("notification wallet pin update is added in the history page")
+@then("Wallet PIN updated notification is added to the history page")
 def wallet_pin_updated(context):
     context.thisHistoryPageQC.wallet_pin_updated()
 

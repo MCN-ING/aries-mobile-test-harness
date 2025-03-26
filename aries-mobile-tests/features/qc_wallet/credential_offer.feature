@@ -3,7 +3,7 @@ Feature: Offer a Credential
    In order have confidence and control of my wallet
    As a holder, I want to be able to review, accept, and decline a credential offer
 
-   @T001-CredentialOffer @critical @AcceptanceTest
+   @T01-CredentialOffer @critical @AcceptanceTest 
    Scenario: Holder receives and views the contents of a credential offer
       Given the user has setup thier wallet    
       And a connection has been successfully made
@@ -15,7 +15,7 @@ Feature: Offer a Credential
          | Test Schema. | Attr 1;Attr 2;Attr 3 | value_1;value_2;value_3 |
 
 
-   @T002-CredentialOffer @critical @AcceptanceTest
+   @T02-CredentialOffer @critical @AcceptanceTest 
    Scenario: Holder declines the credential offer recieved
       Given the user has setup thier wallet
       And a connection has been successfully made
@@ -23,7 +23,8 @@ Feature: Offer a Credential
       When they select Decline the credential
       Then they are brought Home
 
-   @T003-CredentialOffer @critical @AcceptanceTest
+
+   @T03-CredentialOffer @critical @AcceptanceTest 
    Scenario: Holder accepts the credential offer recieved
       Given the user has setup thier wallet
       And a connection has been successfully made
@@ -37,8 +38,9 @@ Feature: Offer a Credential
          | issuer_agent_type  | credential_name     |
          | MCNIssuer          | Test Schema         |
 
-   @T004-CredentialOffer @critical @AcceptanceTest
-   Scenario: Holder accepts the credential offer recieved and check it in the history page
+
+   @T04-CredentialOffer @critical @AcceptanceTest
+   Scenario: Holder accepts the credential offer recieved Then check notification in the history page
       Given the user has setup thier wallet
       And a connection has been successfully made
       And the user has a credential offer
@@ -46,8 +48,9 @@ Feature: Offer a Credential
       When the user check the history page
       Then card accepted notification is added to the history page
 
-   @T005-CredentialOffer @critical @AcceptanceTest
-   Scenario: Holder decline the credential offer recieved and check it in the history page
+
+   @T05-CredentialOffer @critical @AcceptanceTest
+   Scenario: Holder decline the credential offer recieved Then check the notification
       Given the user has setup thier wallet
       And a connection has been successfully made
       And the user has a credential offer
@@ -57,7 +60,7 @@ Feature: Offer a Credential
       Then card declined notification is added to the history page 
 
    
-   @T006-CredentialOffer @critical @AcceptanceTest
+   @T06-CredentialOffer @critical @AcceptanceTest
    Scenario: Holder delete the credential  
       Given the user has setup thier wallet
       And a connection has been successfully made

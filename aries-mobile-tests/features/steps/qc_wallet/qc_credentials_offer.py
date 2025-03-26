@@ -97,7 +97,7 @@ def step_impl(context, credential_name=None):
         context.driver.capabilities["platformName"]
         and context.driver.capabilities["platformVersion"] >= "15"
     ) or context.driver.capabilities["platformName"].lower() == "Android".lower():
-        json_elems = context.thisCredentialsPage.get_credentials()
+        json_elems = context.thisCredentialsPageQC.get_credentials()
         if credential_name == None:
             credential_name = get_expected_credential_name(context)
 
@@ -105,7 +105,7 @@ def step_impl(context, credential_name=None):
     else:
         if credential_name == None:
             credential_name = get_expected_credential_name(context)
-        assert context.thisCredentialsPage.credential_exists(credential_name)
+        assert context.thisCredentialsPageQC.credential_exists(credential_name)
         
 
 def get_expected_credential_name(context):
@@ -156,7 +156,7 @@ def credential_deleted(context):
 @overrides("they select Done", "when")
 def step_impl(context):
     # TODO we could be on the home page at this point. Should we fail the last step, fail this one, or try the cred accept again?
-    if hasattr(context, "thisCredentialsPage") == False:
+    if hasattr(context, "thisCredentialsPageQC") == False:
         # This means we probably went to the Home Page above. Revisit this if the this happens too much.
         context.thisCredentialAddedPage = CredentialAddedPage(context.driver)
     context.thisCredentialsPageQC = context.thisCredentialAddedPage.select_done()

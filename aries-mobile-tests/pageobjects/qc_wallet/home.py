@@ -15,8 +15,10 @@ class HomePageQC(HomePage):
     on_this_page_text_locator = "Home"
     on_this_page_locator = (AppiumBy.NAME, "Home")
     see_all_notifications_link_locator = (AppiumBy.NAME, "See all notifications")
+    see_all_notifications_android_locator = (AppiumBy.XPATH, "//*[contains(@text, 'notifications')]")
     scan_qr_code_locator = (AppiumBy.ID, "com.ariesbifold:id/ScanQrCode")
-    new_credential_offer_locator = (AppiumBy.ID, "com.ariesbifold:id/ViewOffer")
+    new_credential_offer_locator = (AppiumBy.ID, "com.ariesbifold:id/OfferTouchable")
+    new_proof_request_locator = (AppiumBy.ID, "com.ariesbifold:id/ProofRecordTouchable")
 
     # Modals and Alerts for Home page
     welcome_to_qc_wallet_modal = WelcomeToQCWalletModal
@@ -40,7 +42,7 @@ class HomePageQC(HomePage):
         
     def select_see_all_notifications_link(self):
         if self.on_this_page():
-            self.find_by(self.see_all_notifications_link_locator).click()
+            self.find_by(self.see_all_notifications_android_locator).click()
             return NotificationsPageQC(self.driver)
         else:
             raise Exception(f"App not on the {type(self)} page")
@@ -57,6 +59,14 @@ class HomePageQC(HomePage):
         if self.on_this_page():
             self.find_by(self.new_credential_offer_locator, wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE).click()
             # return CredentialOfferPage(self.driver)
+        else:
+            raise Exception(f"App not on the {type(self)}")
+        
+            
+    def select_open_proof_request(self):
+        if self.on_this_page():
+            self.find_by(self.new_proof_request_locator, wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE).click()
+            # return ProofRequestPage(self.driver)
         else:
             raise Exception(f"App not on the {type(self)}")
         

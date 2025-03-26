@@ -1,6 +1,7 @@
 from appium.webdriver.common.appiumby import AppiumBy
 from pageobjects.basepage import BasePage
 import logging
+
 class HistoryPageQC(BasePage):
     """History page object """
     
@@ -10,11 +11,10 @@ class HistoryPageQC(BasePage):
     en_subtitle_locator = "History"
     fr_subtitle_locator = "Historique"
     history_tab_locator = (AppiumBy.ID, "com.ariesbifold:id/Activities.HistoryTab")
-    pin_changed_locator = (AppiumBy.ID, "com.ariesbifold:id/ViewPinChanged") 
-    card_accepted_locator = (AppiumBy.ID, "com.ariesbifold:id/ViewCardAccepted") 
+    pin_updated_locator = (AppiumBy.ID, "com.ariesbifold:id/Swipeable") 
+    card_accepted_locator = (AppiumBy.ID, "com.ariesbifold:id/CardAcceptedTouchable") 
     connexion_established_locator = (AppiumBy.ID, "com.ariesbifold:id/ViewConnection") 
-    card_declined_locator = (AppiumBy.ID, "com.ariesbifold:id/ViewCardDeclined") 
-
+    card_declined_locator = (AppiumBy.ID, "com.ariesbifold:id/CardDeclinedTouchable") 
 
 
     def __init__(self, driver):
@@ -23,11 +23,11 @@ class HistoryPageQC(BasePage):
     def on_this_page(self):
         return super().on_this_page(self.history_tab_locator)
     
-    def wallet_pin_updated(self, timeout=10):
+    def wallet_pin_updated(self):
         """Check if the PIN change notification appears in the history"""
         if self.on_this_page():
-            logging.info(f"checking if locator exist: {self.pin_changed_locator}")
-            return self.find_by(self.pin_changed_locator).is_displayed()
+            logging.info(f"checking if locator exist: {self.pin_updated_locator}")
+            return self.find_by(self.pin_updated_locator).is_displayed()
         else:
             raise Exception(f"App not on the {type(self)} page")
                 
