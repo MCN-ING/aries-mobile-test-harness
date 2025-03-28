@@ -42,7 +42,7 @@ class HomePageQC(HomePage):
         
     def select_see_all_notifications_link(self):
         if self.on_this_page():
-            self.find_by(self.see_all_notifications_android_locator).click()
+            self.find_by(self.see_all_notifications_link_locator).click()
             return NotificationsPageQC(self.driver)
         else:
             raise Exception(f"App not on the {type(self)} page")

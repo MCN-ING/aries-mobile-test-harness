@@ -20,8 +20,6 @@ from pageobjects.bc_wallet.credential_added import CredentialAddedPage
 
 from bc_wallet.credential_offer import *
 from pageobjects.qc_wallet.credential_offer import CredentialOfferPageQC
-# import Page Objects needed
-# from pageobjects.bc_wallet.credential_offer_notification import CredentialOfferNotificationPage
 from pageobjects.bc_wallet.credential_offer import CredentialOfferPage
 from pageobjects.qc_wallet.credentials import CredentialsPageQC
 from pageobjects.bc_wallet.credential_details import CredentialDetailsPage
@@ -40,33 +38,30 @@ def step_impl(context):
     context.thisHomePageQC.select_open_credential_offer()
     
     
-    
 @overrides("they can view the contents of the credential", "then")
 def step_impl(context):
-    assert context.thisCredentialOfferPage.on_this_page()
-
-    cred_type, attributes, values = get_expected_credential_detail(context)
-    # TODO The below doesn't have locators in build 127. Calibrate in the future fixed build
-    # actual_who, actual_cred_type, actual_attributes, actual_values = context.thisCredentialOfferPage.get_credential_details()
-    # assert who in actual_who
-    # assert cred_type in actual_cred_type
-    # assert attributes in actual_attributes
-    # assert values in actual_values
+    if hasattr(context, "thisCredentialOfferPageQC") == False:
+        context.thisCredentialOfferPageQC = CredentialOfferPageQC(context.driver)
+    assert context.thisCredentialOfferPageQC.on_this_page()
+    expected_cred_name, expected_attributes, expected_values = get_expected_credential_detail(context)
+    actual_cred_name, actual_attributes, actual_values = context.thisCredentialOfferPageQC.get_credential_details()
+    assert expected_cred_name in actual_cred_name
+    assert expected_attributes == actual_attributes
+    assert expected_values == actual_values
     
 
 def get_expected_credential_detail(context):
     issuer_type_in_use = context.issuer.get_issuer_type()
     found = False
     for row in context.table:
-            cred_type = row["cred_type"]
+            cred_name = row["cred_name"]
             attributes = row["attributes"].split(";")
             values = row["values"].split(";")
             found = True
-            # get out of loop at the first found row. Can't see a reason for multiple rows of the same agent type
             break
     if found == False:
         raise Exception(f"No credential details in table data for {issuer_type_in_use}")
-    return cred_type, attributes, values
+    return cred_name, attributes, values
 
 
 @overrides("the user has a credential offer", "given")
@@ -133,8 +128,8 @@ def cred_offer_step_impl(context):
         When the connection takes too long reopen app and select notification
     ''')
 
-    context.thisCredentialOfferPage = CredentialOfferPageQC(context.driver)
-    assert context.thisCredentialOfferPage.on_this_page()
+    context.thisCredentialOfferPageQC = CredentialOfferPageQC(context.driver)
+    assert context.thisCredentialOfferPageQC.on_this_page()
 
 @overrides("they are brought to the list of credentials", "then")
 def step_impl(context):

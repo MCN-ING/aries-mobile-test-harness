@@ -37,7 +37,7 @@ def step_impl(context, agent):
         logging.info("Issuing crendential...")
         qrimage = context.issuer.create_invitation(
             print_qrcode=context.print_qr_code_on_creation,
-            save_qrcode=True,
+            save_qrcode=context.save_qr_code_on_creation,
             qr_code_border=qr_code_border,
         )
     elif agent == "verifier":

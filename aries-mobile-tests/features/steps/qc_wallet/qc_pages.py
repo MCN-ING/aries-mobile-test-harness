@@ -195,3 +195,7 @@ def what_are_contacts_step_impl(context):
 @when("the user click on contact list link")
 def contact_list_step_impl(context):
     context.thisWhatAreContactsPageQC.select_contacts_list()
+    
+@then("credential page appears")
+def credentials_page(context):
+    assert context.thisCredentialsPageQC.on_this_page()

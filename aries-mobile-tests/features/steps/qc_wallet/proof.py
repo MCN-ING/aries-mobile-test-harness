@@ -2,6 +2,7 @@ from bc_wallet.proof import *
 from override_steps import overrides
 from time import sleep
 from pageobjects.qc_wallet.navbar import NavBarQC
+import logging
 
 
 
@@ -10,30 +11,7 @@ def step_impl(context):
     if not hasattr(context, "thisProofRequestPage") or context.thisProofRequestPage is None:
         context.thisProofRequestPage = ProofRequestPage(context.driver)
     assert context.thisProofRequestPage.on_this_page()
-    cred_type, attributes, values = get_expected_proof_request_detail(context)
-    # # The below doesn't have locators in build 127. Calibrate in the future fixed build
-    # (
-    #     actual_attributes,
-    #     actual_values,
-    # ) = context.thisProofRequestPage.get_proof_request_details()
-    # assert all(item in attributes for item in actual_attributes)
-    # assert all(item in values for item in actual_values)
-    
-        
-def get_expected_proof_request_detail(context):
-    verifier_type_in_use = context.verifier.get_issuer_type()
-    found = False
-    for row in context.table:
-            cred_type = row["cred_type"]
-            attributes = row["attributes"].split(";")
-            values = row["values"].split(";")
-            found = True
-            # get out of loop at the first found row. Can't see a reason for multiple rows of the same agent type
-    if found == False:
-        raise Exception(
-            f"No credential details in table data for {verifier_type_in_use}"
-        )
-    return cred_type, attributes, values
+    assert context.thisProofRequestPage.proof_request_details_are_visible()
   
     
 @overrides("the holder has a Non-Revocable credential", "given")
@@ -98,3 +76,34 @@ def step_impl(context):
     if not hasattr(context, "thisProofRequestPage") or context.thisProofRequestPage is None:
         context.thisProofRequestPage = ProofRequestPage(context.driver)
     assert context.thisProofRequestPage.on_this_page()
+    
+    
+@overrides("the user has a proof request", "when")
+@overrides("the user has a proof request", "given")
+def step_impl(context):
+    # if the context has a table then use the table to create the proof request
+    if context.table:
+        proof = context.table[0]["proof"]
+        # get the interval for revocation as well, if it doesn't exist in the table then just move on.
+        try:
+            interval = context.table[0]["interval"]
+        except KeyError:
+            interval = None
+
+        context.execute_steps(
+            f"""
+            When the user has a proof request for {proof}
+        """
+        )
+    else:
+        context.execute_steps(
+            f"""
+            When the Holder scans the QR code sent by the "verifier"
+            And the Connecting completes successfully
+            And the Holder receives a proof request
+            And the holder opens the proof request
+            Then holder is brought to the proof request
+        """
+        )
+        
+    sleep(60)
