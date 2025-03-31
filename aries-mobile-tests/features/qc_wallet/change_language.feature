@@ -20,9 +20,9 @@ Feature: Language
     And the holder changes app language to "English"
     Then the language changes automatically to "English"
 
-  #Relunch the app is not yet working as expected
+  #Relaunch the app is not yet working as expected
   @T03-Language @FunctionalTest @extra_config_language_1
-  Scenario: Holder quits app after changing language
+  Scenario: Holder relaunch app after changing language from english to french
     Given the holder has initially selected "English" as the language
     And the holder open the Application settings page
     When the holder select Display language
@@ -32,8 +32,8 @@ Feature: Language
     And they relaunch the app and authenticates with thier PIN
     Then the language is set to "French"
 
-  @T03-Language @FunctionalTest @extra_config_language_2
-  Scenario: Holder quits app after changing language
+  @T04-Language @FunctionalTest @extra_config_language_2
+  Scenario: Holder relaunch app after changing language from french to english
     Given the holder has initially selected "French" as the language
     And the holder open the Application settings page
     When the holder select Display language

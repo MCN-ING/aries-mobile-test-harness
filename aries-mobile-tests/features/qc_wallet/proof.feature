@@ -4,7 +4,7 @@ Feature: Proof
    As a holder
    I want to be able to review, accept, and decline a proof request
 
-   @T01-Proof @critical @AcceptanceTest @test1
+   @T01-Proof @critical @AcceptanceTest
    Scenario: Holder receives and views the contents of a proof request
       Given the user has setup thier wallet     
       And a connection has been successfully made

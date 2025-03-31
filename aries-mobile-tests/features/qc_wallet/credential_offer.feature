@@ -15,7 +15,7 @@ Feature: Offer a Credential
          | Test Schema  | Attr 1;Attr 2;Attr 3 | value_1;value_2;value_3 |
 
 
-   @T02-CredentialOffer @critical @AcceptanceTest @test1
+   @T02-CredentialOffer @critical @AcceptanceTest 
    Scenario: Holder declines the credential offer recieved
       Given the user has setup thier wallet
       And a connection has been successfully made
@@ -24,7 +24,7 @@ Feature: Offer a Credential
       Then they are brought Home
 
 
-   @T03-CredentialOffer @critical @AcceptanceTest 
+   @T03-CredentialOffer @critical @AcceptanceTest
    Scenario: Holder accepts the credential offer recieved
       Given the user has setup thier wallet
       And a connection has been successfully made
@@ -83,14 +83,12 @@ Feature: Offer a Credential
         
 
     @T08-Connect @critical @AcceptanceTest
-    Scenario:  Scan QR code in order to recieve a credential offer (connecting with the issuer)
+    Scenario: check the connection notification in history page
         Given the user has setup thier wallet
         When the user open credentials page
         And the user click on Add your First Credential button
         Then a modal Add a Credential appear
         When the Holder scans the QR code sent by the "issuer"
-        And the Holder select back on the scan camera page and go to Home page
-        When the Holder click on "see all notifications" link 
+        And the Holder click on Activities
         And the Holder click on History
         Then connection established notification is added to the history page 
-

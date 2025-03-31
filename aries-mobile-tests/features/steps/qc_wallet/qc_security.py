@@ -130,35 +130,6 @@ def step_impl(context):
     assert context.thisPINSetupPageQC.get_error() == "PINs do not match"
 
 
-@overrides("they have access to the app with the new PIN", "then")
-def step_access_app_with_pin(context):
-    assert context.thisSettingsPageQC.on_this_page()
-    context.thisHomePageQC = context.thisSettingsPageQC.select_back()
-    assert context.thisHomePageQC.on_this_page()
-
-    context.execute_steps(
-        """
-        Given they have closed the app
-        When they relaunch the app
-    """
-    )
-
-    context.thisBiometricsPage = BiometricsPageQC(context.driver)
-    if context.thisBiometricsPage.on_this_page():
-        context.execute_steps(
-            """
-            When fails to authenticate with thier biometrics once
-        """
-        )
-
-    context.execute_steps(
-        """
-        When they enter thier PIN as "963963"
-        Then they have access to the app
-    """
-    )
-
-
 @overrides("they land on the Home screen", "then")
 @overrides("initialization ends (failing silently)", "when")
 @overrides("they have access to the app", "then")
@@ -322,45 +293,11 @@ def step_update_pin(context, pin):
         And the User selects Change PIN
       """
     )
-
-@overrides("they have closed the app", "when")
-@overrides("they have closed the app", "given")
-def step_impl(context):
-    context.driver.terminate_app(
-        context.driver.capabilities[get_package_or_bundle_id(context)]
-    )
-    
-@overrides("they relaunch the app", "when")
-def step_impl(context):
-    context.driver.activate_app(
-        context.driver.capabilities[get_package_or_bundle_id(context)]
-    )
- 
-@when("they relaunch the app and authenticates with thier PIN")
-def relaunch_app_step_impl(context):
-    context.driver.activate_app(
-        context.driver.capabilities[get_package_or_bundle_id(context)]
-    )
-    time.sleep(5)
-    context.execute_steps(
-        f"""
-        When authenticates with thier PIN as "369369"
-        """
-    )
-       
-@overrides('authenticates with thier PIN as "{pin}"', "when")
-def authenticate_pin_step_impl(context, pin):
-    # if hasattr(context, "thisPINPage") == False:
-    #     context.thisPINPage = PINPage(context.driver)
-    context.thisPINPageQC = PINPageQC(context.driver)
-    context.thisPINPageQC.enter_pin(pin)
-    context.thisPINPageQC.select_enter() 
-    logging.info(f"application relaunched successfully") 
     
 
 @overrides("the User has successfully updated PIN", "when")
 @overrides("the User has successfully updated PIN", "then")
-@then("the modal Successfully changed your PIN appears")
+@then("Successfully changed your PIN modal appears")
 def pin_successfully_updated(context):
     assert context.thisChangePINPageQC.successfully_changed_pin_modal.is_displayed()
     
@@ -399,8 +336,70 @@ def close_reopen_app(context):
         """
         Given they have closed the app
         When they relaunch the app        
+    """
+    )
+   
+   
+@overrides("they have closed the app", "when")
+@overrides("they have closed the app", "given")
+def step_impl(context):
+    context.driver.terminate_app(
+        context.driver.capabilities[get_package_or_bundle_id(context)]
+    )
+    
+@overrides("they relaunch the app", "when")
+def step_impl(context):
+    context.driver.activate_app(
+        context.driver.capabilities[get_package_or_bundle_id(context)]
+    )
+ 
+@when("they relaunch the app and authenticates with thier PIN")
+def relaunch_app_step_impl(context):
+    context.driver.activate_app(
+        context.driver.capabilities[get_package_or_bundle_id(context)]
+    )
+    time.sleep(5)
+    context.execute_steps(
+        f"""
+        When authenticates with thier PIN as "369369"
+        """
+    )
+       
+@overrides('authenticates with thier PIN as "{pin}"', "when")
+def authenticate_pin_step_impl(context, pin):
+    # if hasattr(context, "thisPINPage") == False:
+    #     context.thisPINPage = PINPage(context.driver)
+    context.thisPINPageQC = PINPageQC(context.driver)
+    context.thisPINPageQC.enter_pin(pin)
+    context.thisPINPageQC.select_enter() 
+    logging.info(f"application relaunched successfully") 
+    
+    
+
+@overrides("they have access to the app with the new PIN", "then")
+def step_access_app_with_pin(context):
+    # assert context.thisSettingsPageQC.on_this_page()
+    # context.thisHomePageQC = context.thisSettingsPageQC.select_back()
+    # assert context.thisHomePageQC.on_this_page()
+
+    context.execute_steps(
+        """
         When they enter thier PIN as "963963"
         Then they have access to the app
     """
     )
-   
+
+    context.thisBiometricsPage = BiometricsPageQC(context.driver)
+    if context.thisBiometricsPage.on_this_page():
+        context.execute_steps(
+            """
+            When fails to authenticate with thier biometrics once
+        """
+        )
+
+    context.execute_steps(
+        """
+        When they enter thier PIN as "963963"
+        Then they have access to the app
+    """
+    )

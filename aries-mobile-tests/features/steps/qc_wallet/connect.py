@@ -57,9 +57,9 @@ def step_impl(context, agent):
         logging.info("already on the home page")
         context.thisCameraPrivacyPolicyPageQC = context.thisHomePageQC.select_scan_qr_code()
                 
-    # elif hasattr(context, "thisCredentialsPageQC") == True:
-    #     logging.info("already on the credential page")
-    #     context.thisCameraPrivacyPolicyPageQC = context.thisCredentialsPageQC.add_a_credential_modal.select_scan_qr_code()
+    elif hasattr(context, "thisCredentialsPageQC") == True:
+        logging.info("already on the credential page")
+        context.thisCameraPrivacyPolicyPageQC = context.thisCredentialsPageQC.add_a_credential_modal.select_scan_qr_code()
 
     # If this is the first time the user selects scan, then they will get a Camera Privacy Policy that needs to be dismissed
     # TODO only do this if the platorm is iOS. Android is not showing the policy page at present in Sauce Labs becasue we have autoGrantPermissions on.
@@ -67,6 +67,8 @@ def step_impl(context, agent):
     if context.thisCameraPrivacyPolicyPageQC.on_this_page():
         context.thisCameraPrivacyPolicyPageQC.select_continue()
         context.thisCameraPrivacyPolicyPageQC.identiQc_access_camera_permission_modal.select_allow()
+
+        
 
         # else:
         #     # soft assert that the camera privacy policy page was not displayed

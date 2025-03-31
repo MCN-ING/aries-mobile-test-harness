@@ -11,9 +11,9 @@ class HistoryPageQC(BasePage):
     en_subtitle_locator = "History"
     fr_subtitle_locator = "Historique"
     history_tab_locator = (AppiumBy.ID, "com.ariesbifold:id/Activities.HistoryTab")
-    pin_updated_locator = (AppiumBy.ID, "com.ariesbifold:id/Swipeable") 
+    pin_updated_locator = (AppiumBy.ID, "com.ariesbifold:id/PinChangedTouchable") 
     card_accepted_locator = (AppiumBy.ID, "com.ariesbifold:id/CardAcceptedTouchable") 
-    connexion_established_locator = (AppiumBy.ID, "com.ariesbifold:id/ViewConnection") 
+    connexion_established_locator = (AppiumBy.ID, "com.ariesbifold:id/ConnectionTouchable") 
     card_declined_locator = (AppiumBy.ID, "com.ariesbifold:id/CardDeclinedTouchable") 
 
 

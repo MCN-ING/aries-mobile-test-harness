@@ -23,8 +23,10 @@ class ProofRequestPage(BasePage):
     share_locator = (AppiumBy.ID, "com.ariesbifold:id/Share")
     share_aid_locator = (AppiumBy.ACCESSIBILITY_ID, "Share")
     decline_locator = (AppiumBy.ID, "com.ariesbifold:id/Decline")
-    credential_card_locator = (AppiumBy.ID, "com.ariesbifold:id/CredentialCard")
-    Show_credential_Details_locator = (AppiumBy.ID, "com.ariesbifold:id/ShowCredentialDetails")
+    proof_card_locator = (AppiumBy.ID, "com.ariesbifold:id/CredentialCard")
+    Show_proof_Details_locator = (AppiumBy.ID, "com.ariesbifold:id/ShowCredentialDetails")
+
+
 
 
     def on_this_page(self):
@@ -95,10 +97,7 @@ class ProofRequestPage(BasePage):
         
     def proof_request_details_are_visible(self):
         if self.on_this_page():
-            if self.find_by(self.Show_credential_Details_locator).is_displayed():
-                return True
-            else:
-                logging.info("credential_Details are not displayed")
+            return self.find_by(self.Show_proof_Details_locator).is_displayed() 
         else:
             raise Exception(f"App not on the {type(self)} page")
         
