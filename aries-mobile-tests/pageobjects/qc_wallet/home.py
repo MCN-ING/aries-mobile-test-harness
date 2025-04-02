@@ -2,16 +2,11 @@ from time import sleep
 
 from appium.webdriver.common.appiumby import AppiumBy
 from pageobjects.basepage import BasePage, WaitCondition
-from pageobjects.bc_wallet.connecting import ConnectingPage
 from pageobjects.bc_wallet.credential_details import CredentialDetailsPage
-from pageobjects.bc_wallet.credential_offer import CredentialOfferPage
-from pageobjects.bc_wallet.feedback import FeedbackPage
 from pageobjects.bc_wallet.home import HomePage
-from pageobjects.qc_wallet.settings import SettingsPageQC
 from pageobjects.qc_wallet.welcome_to_qc_wallet import WelcomeToQCWalletModal
-from pageobjects.qc_wallet.moreoptions import MoreOptionsPageQC
 from pageobjects.qc_wallet.notifications import NotificationsPageQC
-from pageobjects.qc_wallet.credentials import CredentialsPageQC
+from pageobjects.qc_wallet.camera_privacy_policy import CameraPrivacyPolicyPageQC
 
 class HomePageQC(HomePage):
     """Home page object"""
@@ -19,12 +14,11 @@ class HomePageQC(HomePage):
     # Locators
     on_this_page_text_locator = "Home"
     on_this_page_locator = (AppiumBy.NAME, "Home")
-    settings_locator = (AppiumBy.ID, "com.ariesbifold:id/Settings")
-    moreOptions_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.OptionsPlus")
-    activities_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Activities")
-    credentials_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Credentials")
-    home_locator = (AppiumBy.ID, "com.ariesbifold:id/TabStack.Home")
     see_all_notifications_link_locator = (AppiumBy.NAME, "See all notifications")
+    see_all_notifications_android_locator = (AppiumBy.XPATH, "//*[contains(@text, 'notifications')]")
+    scan_qr_code_locator = (AppiumBy.ID, "com.ariesbifold:id/ScanQrCode")
+    new_credential_offer_locator = (AppiumBy.ID, "com.ariesbifold:id/OfferTouchable")
+    new_proof_request_locator = (AppiumBy.ID, "com.ariesbifold:id/ProofRecordTouchable")
 
     # Modals and Alerts for Home page
     welcome_to_qc_wallet_modal = WelcomeToQCWalletModal
@@ -52,4 +46,27 @@ class HomePageQC(HomePage):
             return NotificationsPageQC(self.driver)
         else:
             raise Exception(f"App not on the {type(self)} page")
+        
+    def select_scan_qr_code(self):
+        if self.on_this_page():
+            self.find_by(self.scan_qr_code_locator).click()
+            return CameraPrivacyPolicyPageQC (self.driver)
+        else:
+            raise Exception(f"App not on the {type(self)} page")
+        
+        
+    def select_open_credential_offer(self):
+        if self.on_this_page():
+            self.find_by(self.new_credential_offer_locator, wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE).click()
+            # return CredentialOfferPage(self.driver)
+        else:
+            raise Exception(f"App not on the {type(self)}")
+        
+            
+    def select_open_proof_request(self):
+        if self.on_this_page():
+            self.find_by(self.new_proof_request_locator, wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE).click()
+            # return ProofRequestPage(self.driver)
+        else:
+            raise Exception(f"App not on the {type(self)}")
         

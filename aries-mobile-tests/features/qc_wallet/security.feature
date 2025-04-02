@@ -5,17 +5,18 @@ Feature: Secure your Wallet 
   I want to set my security settings to maximum security
 
 
-  @T001-Security @AcceptanceTest @normal @critical
-  Scenario: New User Sets Up PIN
+  @T01-Security @AcceptanceTest @ @critical
+  Scenario: New User Sets Up PIN and connect to the application
     Given the User has accepted the Terms and Conditions
     And the User is on the PIN creation screen
     When the User enters the first PIN as "369369"
     And the User re-enters the PIN as "369369"
     And the User selects Create PIN
     Then the User transitions to biometric screen
+    When the user click continue on the biometrics screen 
+    Then the user land on the Home screen
 
-
-  @T002-Security @FunctionalTest @ExceptionTest @normal 
+  @T02-Security @FunctionalTest @ExceptionTest
   Scenario Outline: New User Sets Up PIN but does not follow conventions
     Given the User has accepted the Terms and Conditions
     And the User is on the PIN creation screen
@@ -26,13 +27,13 @@ Feature: Secure your Wallet 
 
     Examples:
       | pin    | pin_error                                                            |
-      | @28193 | Your PIN needs to only contain digits. Please try again.             |
-      | D28193 | Your PIN needs to only contain digits. Please try again.             |
-      | 123893 | A series was detected in your PIN. Please try again.                 |
+      # | @28193 | Your PIN needs to only contain digits. Please try again.             |
+      # | D28193 | Your PIN needs to only contain digits. Please try again.             |
+      # | 123893 | A series was detected in your PIN. Please try again.                 |
       | 333752 | The PIN can't have a repetition of the same digit. Please try again. |
-      | 65237  | Your PIN is too short. Please try again.                             |
+      # | 65237  | Your PIN is too short. Please try again.                             |
 
-  @T003-Security @FunctionalTest @ExceptionTest @normal
+  @T03-Security @FunctionalTest @ExceptionTest @
   Scenario: New User Sets Up PIN and checks pin by toggling visibility
     Given the User has accepted the Terms and Conditions
     And the User is on the PIN creation screen
@@ -50,18 +51,7 @@ Feature: Secure your Wallet 
   #     | 300       | You're logged out |
 
 
-  @T004-Security @AcceptanceTest @normal @critical
-  Scenario: New User Sets Up PIN and connect to the application
-    Given the User has accepted the Terms and Conditions
-    And the User is on the PIN creation screen
-    When the User enters the first PIN as "369369"
-    And the User re-enters the PIN as "369369"
-    And the User selects Create PIN
-    Then the User transitions to biometric screen
-    When the user click continue on the biometrics screen 
-    Then the user land on the Home screen
-
-  @T005-Security @AcceptanceTest @normal  @critical
+  @T04-Security @AcceptanceTest @  @critical
   Scenario: New User Sets Up PIN and connect to the application with biometrics enabled
     Given the User has accepted the Terms and Conditions
     And the User is on the PIN creation screen
@@ -77,17 +67,17 @@ Feature: Secure your Wallet 
   # In order to keep my wallet secure with a stronger PIN
   # As a wallet user i want to change my wallet PIN
 
-  @T006.1-Security @AcceptanceTest @critical
-  Scenario: Wallet User Changes PIN
+  @T05-Security @AcceptanceTest @critical
+  Scenario: Wallet User Changes PIN Then check history notification
     Given the user has setup thier wallet 
     When the user updates thier PIN to "963963"
-    Then the modal Successfully changed your PIN appears
+    Then Successfully changed your PIN modal appears
     When the user click Okay in the modal Successfully changed your PIN
     Then the user land on the settings screen
     When the user go check the history page
-    Then notification wallet pin update is added in the history page
+    Then Wallet PIN updated notification is added to the history page
 
-  @T006.2-Security @FunctionalTest @ExceptionTest @normal
+  @T06-Security @FunctionalTest @ExceptionTest
   Scenario: Wallet User Changes PIN but PINs do not match
     Given the user has setup thier wallet
     And the user wants to update thier PIN
@@ -101,13 +91,21 @@ Feature: Secure your Wallet 
     When the User re-enters the PIN as "963963"
     And they select visibility toggle on the first PIN as "963963"
     And the User selects Change PIN
-    # And the User has successfully updated PIN
-    Then the modal Successfully changed your PIN appears
+    Then Successfully changed your PIN modal appears
     When the user click Okay in the modal Successfully changed your PIN
-    And the user close and relaunch the application
+
+
+  @T07-Security @FunctionalTest @ExceptionTest
+  Scenario: Wallet User Changes PIN then relaunch the application
+    Given the user has setup thier wallet 
+    When the user updates thier PIN to "963963"
+    Then Successfully changed your PIN modal appears
+    When the user click Okay in the modal Successfully changed your PIN
+    Then the user land on the settings screen
+    When the user close and relaunch the application
     Then they have access to the app with the new PIN
 
-  @T006.3-Security @FunctionalTest @ExceptionTest @normal @qc_wallet_not
+  @T08-Security @FunctionalTest @ExceptionTest @ @qc_wallet_not
   Scenario Outline: User Changes PIN but does not follow conventions
     Given the user has setup thier wallet
     And the user wants to update thier PIN

@@ -150,6 +150,8 @@ def return_step_impl(context):
 
 @when("the Holder click on Activities")
 def activities_home_step_impl(context):
+    if not hasattr(context, "thisNavBarQC"):
+        context.thisNavBarQC = NavBarQC(context.driver)
     context.thisNotificationsPageQC= context.thisNavBarQC.select_activities()
 
 @then("notifications page is displayed")
@@ -193,3 +195,7 @@ def what_are_contacts_step_impl(context):
 @when("the user click on contact list link")
 def contact_list_step_impl(context):
     context.thisWhatAreContactsPageQC.select_contacts_list()
+    
+@then("credential page appears")
+def credentials_page(context):
+    assert context.thisCredentialsPageQC.on_this_page()

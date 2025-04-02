@@ -7,6 +7,7 @@ from pageobjects.bc_wallet.credentials import CredentialsPage
 from pageobjects.qc_wallet.moreoptions import MoreOptionsPageQC
 from pageobjects.qc_wallet.notifications import NotificationsPageQC
 from pageobjects.qc_wallet.credentials import CredentialsPageQC
+from pageobjects.qc_wallet.home import HomePageQC
 
 class NavBarQC(BasePage):
     """Nav Bar Footer object"""

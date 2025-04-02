@@ -79,3 +79,8 @@ def select_back_step_impl(context):
         context.thisScanQRCodePageQC.select_back()
         context.thisNavBarQC= NavBarQC(context.driver)
         context.thisHomePageQC = context.thisNavBarQC.select_home()
+        
+        
+@then("connection established notification is added to the history page")
+def connexion_issuer(context):
+    assert context.thisHistoryPageQC.connexion_established()

@@ -1,7 +1,7 @@
 @TermsAndConditionsQC @qc_wallet @normal
 Feature: Terms and Conditions
-In order to understand my legal obligations when using the app
-As a new holder, i want to review the terms and conditions
+  In order to understand my legal obligations when using the app
+  As a new holder, i want to review the terms and conditions
 
   @T001-TandC @AcceptanceTest @normal
   Scenario: User Accepts Terms and Conditions
@@ -16,7 +16,7 @@ As a new holder, i want to review the terms and conditions
     When the user clicks continue without accepting the Terms and Conditions
     Then the user is on the Terms and Conditions screen
 
-  @T003-useAppGuides @AcceptanceTest 
+  @T003-useAppGuides @AcceptanceTest
   Scenario: the user chooses to use app guides
     Given the user has setup the wallet
     And the user land on the Home screen and the modal welcome to QC Wallet is displayed
@@ -29,8 +29,8 @@ As a new holder, i want to review the terms and conditions
     When the user click done button 
     Then the user land on the Home screen after using app guides
 
-  @T004-useAppGuides @AcceptanceTest 
-  Scenario: the user land on the Home screen after clicking "Don't use app guides" button
+  @T004-useAppGuides @AcceptanceTest
+  Scenario: the user land on the Home screen after choosing "Don't use app guides" button
     Given the user has setup the wallet
     And the user land on the Home screen and the modal welcome to QC Wallet is displayed
     When the user click "Don't use app guides" button 

@@ -130,35 +130,6 @@ def step_impl(context):
     assert context.thisPINSetupPageQC.get_error() == "PINs do not match"
 
 
-@overrides("they have access to the app with the new PIN", "then")
-def step_access_app_with_pin(context):
-    assert context.thisSettingsPageQC.on_this_page()
-    context.thisHomePageQC = context.thisSettingsPageQC.select_back()
-    assert context.thisHomePageQC.on_this_page()
-
-    context.execute_steps(
-        """
-        Given they have closed the app
-        When they relaunch the app
-    """
-    )
-
-    context.thisBiometricsPage = BiometricsPageQC(context.driver)
-    if context.thisBiometricsPage.on_this_page():
-        context.execute_steps(
-            """
-            When fails to authenticate with thier biometrics once
-        """
-        )
-
-    context.execute_steps(
-        """
-        When they enter thier PIN as "963963"
-        Then they have access to the app
-    """
-    )
-
-
 @overrides("they land on the Home screen", "then")
 @overrides("initialization ends (failing silently)", "when")
 @overrides("they have access to the app", "then")
@@ -322,7 +293,53 @@ def step_update_pin(context, pin):
         And the User selects Change PIN
       """
     )
+    
 
+@overrides("the User has successfully updated PIN", "when")
+@overrides("the User has successfully updated PIN", "then")
+@then("Successfully changed your PIN modal appears")
+def pin_successfully_updated(context):
+    assert context.thisChangePINPageQC.successfully_changed_pin_modal.is_displayed()
+    
+    # context.thisSettingsPage = (
+    #     context.thisChangePINPageQC.successfully_changed_pin_modal.select_okay()
+    # )
+@when("the user click Okay in the modal Successfully changed your PIN")
+def okay_step_impl(context):
+    context.thisChangePINPageQC.successfully_changed_pin_modal.select_okay()
+
+@then("the user land on the settings screen")
+def land_on_settings_page(context):
+    assert context.thisSettingsPageQC.on_this_page()
+    
+@when("the user go check the history page")
+def go_to_history(context):
+    context.thisSettingsPageQC.select_back()
+    context.execute_steps(
+        f"""
+        When the Holder click on Activities
+        Then notifications page is displayed
+        When the Holder click on History
+        Then History page is displayed
+        """
+    )
+    
+@then("Wallet PIN updated notification is added to the history page")
+def wallet_pin_updated(context):
+    context.thisHistoryPageQC.wallet_pin_updated()
+
+@when("the user close and relaunch the application")
+def close_reopen_app(context):
+    context.thisMoreOptionsPageQC = context.thisSettingsPageQC.select_back()
+    # assert context.thisHomePageQC.on_this_page()
+    context.execute_steps(
+        """
+        Given they have closed the app
+        When they relaunch the app        
+    """
+    )
+   
+   
 @overrides("they have closed the app", "when")
 @overrides("they have closed the app", "given")
 def step_impl(context):
@@ -357,50 +374,32 @@ def authenticate_pin_step_impl(context, pin):
     context.thisPINPageQC.select_enter() 
     logging.info(f"application relaunched successfully") 
     
-
-@overrides("the User has successfully updated PIN", "when")
-@overrides("the User has successfully updated PIN", "then")
-@then("the modal Successfully changed your PIN appears")
-def pin_successfully_updated(context):
-    assert context.thisChangePINPageQC.successfully_changed_pin_modal.is_displayed()
     
-    # context.thisSettingsPage = (
-    #     context.thisChangePINPageQC.successfully_changed_pin_modal.select_okay()
-    # )
-@when("the user click Okay in the modal Successfully changed your PIN")
-def okay_step_impl(context):
-    context.thisChangePINPageQC.successfully_changed_pin_modal.select_okay()
 
-@then("the user land on the settings screen")
-def land_on_settings_page(context):
-    assert context.thisSettingsPageQC.on_this_page()
-    
-@when("the user go check the history page")
-def go_to_history(context):
-    context.thisSettingsPageQC.select_back()
-    context.execute_steps(
-        f"""
-        When the Holder click on Activities
-        Then notifications page is displayed
-        When the Holder click on History
-        Then History page is displayed
-        """
-    )
-    
-@then("notification wallet pin update is added in the history page")
-def wallet_pin_updated(context):
-    context.thisHistoryPageQC.wallet_pin_updated()
-
-@when("the user close and relaunch the application")
-def close_reopen_app(context):
-    context.thisMoreOptionsPageQC = context.thisSettingsPageQC.select_back()
+@overrides("they have access to the app with the new PIN", "then")
+def step_access_app_with_pin(context):
+    # assert context.thisSettingsPageQC.on_this_page()
+    # context.thisHomePageQC = context.thisSettingsPageQC.select_back()
     # assert context.thisHomePageQC.on_this_page()
+
     context.execute_steps(
         """
-        Given they have closed the app
-        When they relaunch the app        
         When they enter thier PIN as "963963"
         Then they have access to the app
     """
     )
-   
+
+    context.thisBiometricsPage = BiometricsPageQC(context.driver)
+    if context.thisBiometricsPage.on_this_page():
+        context.execute_steps(
+            """
+            When fails to authenticate with thier biometrics once
+        """
+        )
+
+    context.execute_steps(
+        """
+        When they enter thier PIN as "963963"
+        Then they have access to the app
+    """
+    )
