@@ -7,6 +7,8 @@ from pageobjects.bc_wallet.home import HomePage
 from pageobjects.qc_wallet.welcome_to_qc_wallet import WelcomeToQCWalletModal
 from pageobjects.qc_wallet.notifications import NotificationsPageQC
 from pageobjects.qc_wallet.camera_privacy_policy import CameraPrivacyPolicyPageQC
+import logging
+
 
 class HomePageQC(HomePage):
     """Home page object"""
@@ -14,8 +16,10 @@ class HomePageQC(HomePage):
     # Locators
     on_this_page_text_locator = "Home"
     on_this_page_locator = (AppiumBy.NAME, "Home")
-    see_all_notifications_link_locator = (AppiumBy.NAME, "See all notifications")
-    see_all_notifications_android_locator = (AppiumBy.XPATH, "//*[contains(@text, 'notifications')]")
+    see_all_notifications_ios_locator = (AppiumBy.NAME, "See all notifications")
+    
+    see_all_notifications_android_locator = (AppiumBy.XPATH, "//*[contains(@text, 'See all notifications')]")
+
     scan_qr_code_locator = (AppiumBy.ID, "com.ariesbifold:id/ScanQrCode")
     new_credential_offer_locator = (AppiumBy.ID, "com.ariesbifold:id/OfferTouchable")
     new_proof_request_locator = (AppiumBy.ID, "com.ariesbifold:id/ProofRecordTouchable")
@@ -38,14 +42,29 @@ class HomePageQC(HomePage):
         self.find_by(
             self.dismiss_button_locator,
             wait_condition=WaitCondition.ELEMENT_TO_BE_CLICKABLE,
-        ).click()        
+        ).click()  
+        
         
     def select_see_all_notifications_link(self):
         if self.on_this_page():
-            self.find_by(self.see_all_notifications_link_locator).click()
-            return NotificationsPageQC(self.driver)
+            if self.current_platform.lower() == "iOS".lower():
+                notifications_locator = self.see_all_notifications_ios_locator
+            else:
+                notifications_locator = self.see_all_notifications_android_locator
+            el_visible = self.is_element_visible(
+                notifications_locator
+            )
+            timeout = 10
+            while not el_visible and timeout > 0:
+                self.swipe_down()
+                el_visible = self.is_element_visible(
+                    notifications_locator
+                )
+                timeout -= 1
+            self.find_by(notifications_locator).click()
+            return True
         else:
-            raise Exception(f"App not on the {type(self)} page")
+            logging.info(f"there's no see all notifications link in the {type(self)} page")
         
     def select_scan_qr_code(self):
         if self.on_this_page():

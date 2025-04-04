@@ -27,11 +27,11 @@ Feature: Secure your Wallet 
 
     Examples:
       | pin    | pin_error                                                            |
-      # | @28193 | Your PIN needs to only contain digits. Please try again.             |
-      # | D28193 | Your PIN needs to only contain digits. Please try again.             |
-      # | 123893 | A series was detected in your PIN. Please try again.                 |
+      | @28193 | Your PIN needs to only contain digits. Please try again.             |
+      | D28193 | Your PIN needs to only contain digits. Please try again.             |
+      | 123893 | A series was detected in your PIN. Please try again.                 |
       | 333752 | The PIN can't have a repetition of the same digit. Please try again. |
-      # | 65237  | Your PIN is too short. Please try again.                             |
+      | 65237  | Your PIN is too short. Please try again.                             |
 
   @T03-Security @FunctionalTest @ExceptionTest @
   Scenario: New User Sets Up PIN and checks pin by toggling visibility
